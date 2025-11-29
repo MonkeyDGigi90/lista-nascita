@@ -1,0 +1,26 @@
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node (se mai userai node in futuro)
+node_modules/
+package-lock.json
+dist/
+
+# Build
+.next/
+out/
+
+# Log
+*.log
+npm-debug.log*
+
+# Local env files
+.env.local
+.env.*.local
