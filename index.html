@@ -1,0 +1,352 @@
+<!DOCTYPE HTML>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+<title>Lista Nascita di Luna - Farmacroce</title>
+<style>
+    :root{
+      --accent:#d47fa6;
+      --muted:#6b7280;
+      --card-bg:#ffffff;
+      --page-bg:#f6f7fb;
+      --success:#16a34a;
+    }
+    html,body{height:100%;}
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: var(--page-bg);
+      margin:0; padding:24px; color:#111827;
+    }
+    .site-header{max-width:1100px;margin:0 auto 18px;padding:12px 6px;text-align:center}
+    .logo{max-width:180px;display:inline-block}
+    h1{color:var(--accent);margin:6px 0 4px;font-weight:700}
+    p.lead{color:var(--muted);margin-top:0}
+
+    .container{max-width:1100px;margin:0 auto;display:block}
+    .main{display:flex;gap:20px;align-items:flex-start}
+    .products-grid{flex:1;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+
+    .product{background:var(--card-bg);border-radius:10px;padding:12px;border:1px solid #e6e9ef;box-shadow:0 2px 6px rgba(16,24,40,0.03);}
+    .product img{width:100%;height:140px;object-fit:cover;border-radius:6px;margin-bottom:10px}
+    .product h3{margin:0 0 6px;font-size:1.05rem}
+    .product p{margin:4px 0;color:var(--muted)}
+    .stock{font-size:0.95rem}
+    .product .add-btn{width:100%;display:inline-block;padding:10px;border-radius:8px;background:var(--accent);color:#fff;border:none;cursor:pointer;font-weight:600}
+    .product .add-btn[disabled]{opacity:0.7}
+
+    .cart{width:320px;background:linear-gradient(180deg,#ffffff,#fbfdff);border-radius:10px;padding:14px;border:1px solid #e2e8f0;box-shadow:0 6px 18px rgba(15,23,42,0.06)}
+    .cart h2{margin:0 0 10px}
+    #cart{list-style:none;padding:0;margin:0 0 12px}
+    #cart li{margin:0;padding:0}
+    /* cart item layout */
+    .cart .total{display:flex;align-items:center;justify-content:space-between;font-size:1.05rem;margin-top:8px}
+    .cart button{border-radius:8px}
+    #cart .cart-item{display:flex;justify-content:space-between;align-items:center;padding:8px;border-bottom:1px solid #e6e9ef}
+    #cart .cart-item .left{max-width:68%;overflow:hidden}
+    #cart .cart-item .left strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    #cart .cart-item .left small{color:var(--muted);display:block}
+    #cart .cart-item .controls{display:flex;gap:6px;align-items:center}
+    #cart .cart-item .controls button{padding:6px 8px;border-radius:6px;border:none;background:#f3f4f6;cursor:pointer;color:#111}
+    #cart .cart-item .controls button:hover{filter:brightness(.95)}
+    #cart .cart-item .controls .qty-btn{width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;padding:0}
+    #cart .cart-item .controls .remove-btn{background:#ef4444;color:#fff}
+    /* PayPal mark next to total */
+    .cart .total img{display:inline-block;margin-left:8px;height:28px;vertical-align:middle}
+
+    #paypal-button-container{margin-top:10px}
+    #paypal-mark{transition:opacity .2s}
+
+    /* Lightbox */
+    .lightbox{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,6,23,0.6);z-index:9999;opacity:0;pointer-events:none;transition:opacity .18s}
+    .lightbox.open{opacity:1;pointer-events:auto}
+    .lightbox-content{max-width:92%;max-height:92%;border-radius:8px;overflow:hidden;box-shadow:0 10px 40px rgba(2,6,23,0.6);background:#fff;padding:6px}
+    .lightbox-content img{display:block;max-width:100%;max-height:80vh;object-fit:contain}
+    .lightbox-close{position:absolute;top:18px;right:20px;background:rgba(255,255,255,0.9);border-radius:999px;padding:6px 8px;cursor:pointer;font-weight:700}
+
+    @media(max-width:880px){
+      .main{flex-direction:column}
+      .cart{width:100%}
+    }
+ </style>
+</head>
+<body>
+<!-- Intestazione (logo inserito nella sezione header sotto) -->
+
+    <!-- Nota: mettere le immagini prodotto nella cartella `img/` con i nomi suggeriti.
+      Esempi: `img/crema-idratante-baby.jpg`, `img/set-biberon.jpg`, `img/pannolini-bio.jpg` -->
+  <div class="site-header">
+    <img class="logo" src="Logo.jpg" alt="Logo Farmacroce">
+    <h1>🎀 Lista Nascita di Luna 🎀</h1>
+    <p class="lead">Benvenuti nella lista nascita di Luna presso la Parafarmacia Farmacroce!</p>
+  </div>
+
+  <div class="container">
+    <div class="main">
+      <div id="products" class="products-grid">
+        <div class="product" data-product="Chicco soluzione salina ipertonica" data-price="10" data-stock="1">
+          <img class="product-img" src="Chicco soluzione.jpg" alt="Chicco soluzione salina ipertonica" style="cursor: zoom-in;">
+          <h3>Chicco soluzione salina ipertonica</h3>
+          <p>Prezzo: €10.00</p>
+          <p class="stock">Disponibili: 1</p>
+          <button class="add-btn" onclick="addToCart('Chicco soluzione salina ipertonica', 10)" style="">Aggiungi al carrello</button>
+        </div>
+      </div>
+
+      <aside class="cart">
+        <h2>🛒 Carrello</h2>
+        <ul id="cart"><li style="color: #999;">Carrello vuoto</li></ul>
+        <div class="total">
+          <strong>Totale: €<span id="total">0.00</span></strong>
+          <img id="paypal-mark" src="paypal.png" alt="PayPal" style="display: none; height: 28px; vertical-align: middle; margin-left: 8px; cursor: pointer;" onclick="document.getElementById('paypal-button-container').scrollIntoView({behavior:'smooth'});">
+        </div>
+        <!-- Bottone PayPal -->
+        <div id="paypal-button-container" style="display: none;"></div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Lightbox markup -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-hidden="true">
+    <div class="lightbox-content">
+      <button id="lightbox-close" class="lightbox-close" aria-label="Chiudi">✕</button>
+      <img id="lightbox-img" src="" alt="">
+    </div>
+  </div>
+
+  <!-- PayPal SDK - modalità Sandbox per test locale -->
+  <script src="https://www.paypal.com/sdk/js?client-id=sb&amp;currency=EUR" data-uid-auto="uid_mwrfqkrdjrrjdriisejljfrdcclpzf"></script>
+  <script>
+    let cart = [];
+    const products = {};
+    let paypalButtonsRendered = false;
+
+    function initProducts() {
+      const productDivs = document.querySelectorAll('#products .product');
+      productDivs.forEach(div => {
+        const name = div.getAttribute('data-product');
+        const price = parseFloat(div.getAttribute('data-price')) || 0;
+        const stock = parseInt(div.getAttribute('data-stock'), 10) || 0;
+        products[name] = { price, stock, element: div };
+        updateStockDisplay(name);
+        // attacca evento click per lightbox sull'immagine del prodotto
+        const img = div.querySelector('.product-img') || div.querySelector('img');
+        if (img) {
+          img.style.cursor = 'zoom-in';
+          img.addEventListener('click', function() {
+            openLightbox(this.src, this.alt || name);
+          });
+        }
+      });
+    }
+
+    // Lightbox functions
+    function openLightbox(src, alt) {
+      const lightbox = document.getElementById('lightbox');
+      const lbImg = document.getElementById('lightbox-img');
+      if (!lightbox || !lbImg) return;
+      lbImg.src = src;
+      lbImg.alt = alt || '';
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeLightbox() {
+      const lightbox = document.getElementById('lightbox');
+      const lbImg = document.getElementById('lightbox-img');
+      if (!lightbox || !lbImg) return;
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      // rimuovi src per evitare carico persistente
+      lbImg.src = '';
+    }
+
+    // chiusura lightbox con click sul bottone o sullo sfondo
+    document.addEventListener('click', function(e) {
+      const lightbox = document.getElementById('lightbox');
+      if (!lightbox) return;
+      if (e.target.id === 'lightbox-close') closeLightbox();
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    function updateStockDisplay(name) {
+      const p = products[name];
+      if (!p) return;
+      const div = p.element;
+      const stockSpan = div.querySelector('.stock');
+      const btn = div.querySelector('button.add-btn');
+      if (p.stock <= 0) {
+        stockSpan.textContent = 'Regalato';
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = 'Regalato';
+          btn.style.background = '#999';
+          btn.style.cursor = 'default';
+        }
+      } else {
+        stockSpan.textContent = `Disponibili: ${p.stock}`;
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = 'Aggiungi al carrello';
+          btn.style.background = '';
+          btn.style.cursor = '';
+        }
+      }
+    }
+
+    function addToCart(product, price) {
+      const p = products[product];
+      if (!p || p.stock <= 0) {
+        alert('Prodotto esaurito');
+        updateStockDisplay(product);
+        return;
+      }
+      const existingItem = cart.find(item => item.product === product);
+      if (existingItem) {
+        if (p.stock <= 0) { alert('Nessun pezzo disponibile'); return; }
+        existingItem.quantity += 1;
+      } else {
+        cart.push({ product, price, quantity: 1 });
+      }
+      p.stock -= 1;
+      updateStockDisplay(product);
+      renderCart();
+    }
+
+    function removeFromCart(index) {
+      const item = cart[index];
+      if (item) {
+        // ripristina lo stock
+        if (products[item.product]) {
+          products[item.product].stock += item.quantity;
+          updateStockDisplay(item.product);
+        }
+        cart.splice(index, 1);
+        renderCart();
+      }
+    }
+
+    function changeQuantity(index, change) {
+      const item = cart[index];
+      if (!item) return;
+      const p = products[item.product];
+      if (change > 0) {
+        if (p.stock <= 0) { alert('Non ci sono più pezzi disponibili'); return; }
+        item.quantity += 1;
+        p.stock -= 1;
+      } else {
+        item.quantity -= 1;
+        p.stock += 1;
+        if (item.quantity <= 0) {
+          cart.splice(index, 1);
+        }
+      }
+      updateStockDisplay(item.product);
+      renderCart();
+    }
+
+    function getTotal() {
+      return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    }
+
+    function renderCart() {
+      const cartList = document.getElementById('cart');
+      cartList.innerHTML = '';
+
+      if (cart.length === 0) {
+        cartList.innerHTML = '<li style="color: #999;">Carrello vuoto</li>';
+      } else {
+        cart.forEach((item, index) => {
+          const subtotal = (item.price * item.quantity).toFixed(2);
+          const li = document.createElement('li');
+          li.className = 'cart-item';
+          li.innerHTML = `
+            <div class="left">
+              <strong>${item.product}</strong>
+              <small>€${item.price} x ${item.quantity} = €${subtotal}</small>
+            </div>
+            <div class="controls">
+              <button class="qty-btn" onclick="changeQuantity(${index}, -1)">−</button>
+              <button class="qty-btn" onclick="changeQuantity(${index}, 1)">+</button>
+              <button class="remove-btn" onclick="removeFromCart(${index})">🗑</button>
+            </div>
+          `;
+          cartList.appendChild(li);
+        });
+      }
+
+      const total = getTotal().toFixed(2);
+      document.getElementById('total').textContent = total;
+
+      // Mostra/nascondi bottone PayPal
+      const paypalContainer = document.getElementById('paypal-button-container');
+      const paypalMark = document.getElementById('paypal-mark');
+      if (cart.length > 0) {
+        paypalContainer.style.display = 'block';
+        if (paypalButtonsRendered) {
+          paypalContainer.innerHTML = '';
+          paypalButtonsRendered = false;
+        }
+        renderPayPalButtons();
+        if (paypalMark) paypalMark.style.display = 'inline-block';
+      } else {
+        paypalContainer.innerHTML = '';
+        paypalContainer.style.display = 'none';
+        if (paypalMark) paypalMark.style.display = 'none';
+      }
+    }
+
+    function renderPayPalButtons() {
+      if (cart.length === 0) return;
+      if (paypalButtonsRendered) return;
+
+      paypal.Buttons({
+          createOrder: function(data, actions) {
+            const total = getTotal().toFixed(2);
+            return actions.order.create({
+              purchase_units: [{
+                amount: {
+                  currency_code: 'EUR',
+                  value: total,
+                  breakdown: {
+                    item_total: { currency_code: 'EUR', value: total }
+                  }
+                },
+                items: cart.map(item => ({
+                  name: item.product,
+                  unit_amount: { currency_code: 'EUR', value: item.price.toFixed(2) },
+                  quantity: item.quantity.toString()
+                }))
+              }]
+            });
+          },
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details) {
+            const buyer = (details.payer && details.payer.name && details.payer.name.given_name) || 'Cliente';
+            const amount = details.purchase_units && details.purchase_units[0] && details.purchase_units[0].amount && details.purchase_units[0].amount.value;
+            alert('Grazie ' + buyer + '! Il pagamento di €' + amount + ' è stato completato con successo.\n\nNumero ordine: ' + details.id);
+            cart = [];
+            // dopo pagamento non ripristiniamo stock (sono considerati venduti/regalati)
+            renderCart();
+          });
+        },
+        onError: function(err) {
+          alert('Errore nel pagamento: ' + err);
+        },
+        onCancel: function(data) {
+          alert('Pagamento annullato.');
+        }
+      }).render('#paypal-button-container');
+
+      paypalButtonsRendered = true;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      initProducts();
+      renderCart();
+    });
+  </script>
+</body>
+</html>
+
+  
