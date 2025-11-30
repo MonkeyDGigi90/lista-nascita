@@ -43,6 +43,8 @@
      .product h3{margin:6px 0}
      .product .desc{min-height:48px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;line-height:1.2rem;max-height:3.6rem;transition:max-height .18s ease}
     .product .desc.expanded{display:block;overflow:visible;max-height:9999px;-webkit-line-clamp:unset}
+    /* When description expands, allow card to grow */
+    .product:has(.desc.expanded){max-height:none;overflow:visible;height:auto}
     .more-btn{background:none;border:none;color:var(--accent);cursor:pointer;padding:6px 0;font-weight:600}
     .product .meta{margin-top:4px}
     .product .add-btn{margin-top:auto}
