@@ -28,10 +28,11 @@
 
     .container{max-width:1100px;margin:0 auto;display:block}
     .main{display:flex;gap:20px;align-items:flex-start}
-    .products-grid{flex:1;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+    /* Products grid: wider cards for better readability on desktop */
+    .products-grid{flex:1;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
 
     .product{background:var(--card-bg);border-radius:10px;padding:12px;border:1px solid #e6e9ef;box-shadow:0 2px 6px rgba(16,24,40,0.03);}
-    .product img{width:100%;height:140px;object-fit:cover;border-radius:6px;margin-bottom:10px}
+    .product img{width:100%;height:180px;object-fit:cover;border-radius:6px;margin-bottom:10px}
     .product h3{margin:0 0 6px;font-size:1.05rem}
     .product p{margin:4px 0;color:var(--muted)}
     .stock{font-size:0.95rem}
@@ -114,7 +115,9 @@
         <div class="product" data-product="Zaino Mustela" data-price="45.00" data-stock="1">
           <img class="product-img" src="Zaino Mustela.jpg" alt="Zaino Mustela" style="cursor: zoom-in;">
           <h3>Zaino Mustela</h3>
+          <p class="desc">Contenuto: Fluido detergente senza risciaquo 300ml, Detergente delicato 200ml, Hydra bébè crema viso 40 ml, Pasta cambio 50ml.</p>
           <p>Prezzo: €45.00</p>
+          <small class="meta">Marca: Mustela
           <p class="stock">Disponibili: 1</p>
           <button class="add-btn" onclick="addToCart('Zaino Mustela', 45.00)">Aggiungi al carrello</button>
         </div>
@@ -123,9 +126,9 @@
         <div class="product" data-product="Organizer passeggino Mustela" data-price="25.00" data-stock="1" data-sku="MU-002" data-brand="Mustela">
           <img class="product-img" src="Organizer passeggino.jpg" alt="Organizer passeggino Mustela" style="cursor: zoom-in;">
           <h3>Organizer passeggino Mustela</h3>
-          <p class="desc">Pratico organizer da agganciare al passeggino con tasche multiple per biberon, pannolini e accessori.</p>
+          <p class="desc">Pratico organizer da agganciare al passeggino con tasche multiple per biberon, pannolini e accessori. Contenuto: Bagnetto mille bolle 200ml, Shampoo dolce 200ml.</p>
           <p>Prezzo: €25.00</p>
-          <small class="meta">Marca: Mustela · SKU: MU-002</small>
+          <small class="meta">Marca: Mustela 
           <p class="stock">Disponibili: 1</p>
           <button class="add-btn" onclick="addToCart('Organizer passeggino Mustela', 25.00)">Aggiungi al carrello</button>
         </div>
@@ -133,9 +136,9 @@
         <div class="product" data-product="Scatola in latta Mustela" data-price="15.00" data-stock="1" data-sku="MU-003" data-brand="Mustela">
           <img class="product-img" src="Scatola in latta.jpg" alt="Scatola in latta Mustela" style="cursor: zoom-in;">
           <h3>Scatola in latta Mustela</h3>
-          <p class="desc">Scatola in latta con design elegante, perfetta per confezionare piccoli regali o conservare accessori per il neonato.</p>
+          <p class="desc">Scatola in latta con design elegante, perfetta per confezionare piccoli regali o conservare accessori per il neonato. Contenuto: Detergente delicato 200ml, Hydra bébè viso 40ml.</p>
           <p>Prezzo: €15.00</p>
-          <small class="meta">Marca: Mustela · SKU: MU-003</small>
+          <small class="meta">Marca: Mustela 
           <p class="stock">Disponibili: 1</p>
           <button class="add-btn" onclick="addToCart('Scatola in latta Mustela', 15.00)">Aggiungi al carrello</button>
         </div>
