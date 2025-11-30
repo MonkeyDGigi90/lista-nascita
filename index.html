@@ -54,13 +54,6 @@
       .product img{height:140px}
     }
 
-    @media (max-width: 480px) {
-      .products-grid{grid-template-columns:1fr}
-      .product img{height:110px}
-      /* allow full flow on small screens so images and expanded descriptions are visible */
-      .product{max-height:none;overflow:visible}
-    }
-
     /* Mobile-specific tweaks: larger touch targets, compact header and spacing */
     @media (max-width: 480px) {
       body{padding:12px}
@@ -68,8 +61,10 @@
       .logo{max-width:140px}
       .header-top{justify-content:space-between;align-items:center;gap:8px}
       .social svg{width:32px;height:32px}
-      .products-grid{gap:12px}
-      .product img{height:120px}
+      .products-grid{gap:12px;grid-template-columns:1fr}
+      /* allow full flow on small screens so images and expanded descriptions are visible */
+      .product{max-height:none!important;overflow:visible!important;height:auto!important}
+      .product img{height:200px!important;width:100%!important;display:block!important;object-fit:cover!important}
       .product h3{font-size:1rem}
       .product .desc{-webkit-line-clamp:4}
       .product .add-btn{padding:12px;font-size:1rem;border-radius:8px}
@@ -156,7 +151,7 @@
     <div class="main">
       <div id="products" class="products-grid">
         <div class="product" data-product="Zaino Mustela" data-price="45.00" data-stock="1">
-          <img class="product-img" src="Zaino Mustela.jpg" alt="Zaino Mustela" style="cursor: zoom-in;">
+          <img class="product-img" src="img/Zaino Mustela.jpg" alt="Zaino Mustela" style="cursor: zoom-in;">
           <h3>Zaino Mustela</h3>
           <p class="desc">Contenuto: Fluido detergente senza risciaquo 300ml, Detergente delicato 200ml, Hydra bébè crema viso 40 ml, Pasta cambio 50ml.</p>
           <p>Prezzo: €45.00</p>
@@ -167,7 +162,7 @@
           <!-- Chicco soluzione rimossa come richiesto -->
 
         <div class="product" data-product="Organizer passeggino Mustela" data-price="25.00" data-stock="1" data-sku="MU-002" data-brand="Mustela">
-          <img class="product-img" src="Organizer passeggino.jpg" alt="Organizer passeggino Mustela" style="cursor: zoom-in;">
+          <img class="product-img" src="img/Organizer passeggino.jpg" alt="Organizer passeggino Mustela" style="cursor: zoom-in;">
           <h3>Organizer passeggino Mustela</h3>
           <p class="desc">Pratico organizer da agganciare al passeggino con tasche multiple per biberon, pannolini e accessori. Contenuto: Bagnetto mille bolle 200ml, Shampoo dolce 200ml.</p>
           <p>Prezzo: €25.00</p>
@@ -177,7 +172,7 @@
         </div>
 
         <div class="product" data-product="Scatola in latta Mustela" data-price="15.00" data-stock="1" data-sku="MU-003" data-brand="Mustela">
-          <img class="product-img" src="Scatola in latta.jpg" alt="Scatola in latta Mustela" style="cursor: zoom-in;">
+          <img class="product-img" src="img/Scatola in latta.jpg" alt="Scatola in latta Mustela" style="cursor: zoom-in;">
           <h3>Scatola in latta Mustela</h3>
           <p class="desc">Scatola in latta con design elegante, perfetta per confezionare piccoli regali o conservare accessori per il neonato. Contenuto: Detergente delicato 200ml, Hydra bébè viso 40ml.</p>
           <p>Prezzo: €15.00</p>
@@ -187,7 +182,7 @@
         </div>
 
         <div class="product" data-product="Set Mustela crema solare con borsa frigo" data-price="25.00" data-stock="1" data-sku="MU-002" data-brand="Mustela">
-          <img class="product-img" src="Mustela borsa frigo.jpg" alt="Set Mustela crema solare con borsa frigo" style="cursor: zoom-in;">
+          <img class="product-img" src="img/Mustela borsa frigo.jpg" alt="Set Mustela crema solare con borsa frigo" style="cursor: zoom-in;">
           <h3>Set Mustela crema solare con borsa frigo</h3>
           <p class="desc">Mustela Kit Solare per tutta la famiglia comprende lo Spray Latte Solare SPF50 da 200ml e la pratica Borsa Frigo in R-pet certificato da portare sempre con te</p>
           <p>Prezzo: €25.00</p>
