@@ -41,7 +41,9 @@
      .product{background:var(--card-bg);border-radius:10px;padding:12px;border:1px solid #e6e9ef;box-shadow:0 2px 6px rgba(16,24,40,0.03);display:flex;flex-direction:column;justify-content:space-between;height:100%;max-height:420px;overflow:hidden}
      .product img{width:100%;height:150px;object-fit:cover;border-radius:6px;margin-bottom:10px}
      .product h3{margin:6px 0}
-     .product .desc{min-height:48px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis}
+     .product .desc{min-height:48px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;line-height:1.2rem;max-height:3.6rem;transition:max-height .18s ease}
+    .product .desc.expanded{display:block;overflow:visible;max-height:9999px;-webkit-line-clamp:unset}
+    .more-btn{background:none;border:none;color:var(--accent);cursor:pointer;padding:6px 0;font-weight:600}
     .product .meta{margin-top:4px}
     .product .add-btn{margin-top:auto}
 
@@ -55,7 +57,8 @@
     @media (max-width: 480px) {
       .products-grid{grid-template-columns:1fr}
       .product img{height:110px}
-      .product{max-height:360px}
+      /* allow full flow on small screens so images and expanded descriptions are visible */
+      .product{max-height:none;overflow:visible}
     }
 
     /* Mobile-specific tweaks: larger touch targets, compact header and spacing */
@@ -238,7 +241,32 @@
             openLightbox(this.src, this.alt || name);
           });
         }
+
+        // aggiungi pulsante "Mostra altro" se la descrizione è lunga
+        const desc = div.querySelector('.desc');
+        if (desc) {
+          const text = desc.textContent || '';
+          if (text.length > 120) {
+            const btn = document.createElement('button');
+            btn.className = 'more-btn';
+            btn.type = 'button';
+            btn.textContent = 'Mostra altro';
+            btn.addEventListener('click', function() { toggleDesc(this); });
+            // inserisci il bottone subito dopo la descrizione
+            if (desc.nextSibling) desc.parentNode.insertBefore(btn, desc.nextSibling);
+            else desc.parentNode.appendChild(btn);
+          }
+        }
       });
+    }
+
+    function toggleDesc(btn) {
+      const container = btn.parentElement;
+      if (!container) return;
+      const desc = container.querySelector('.desc');
+      if (!desc) return;
+      const expanded = desc.classList.toggle('expanded');
+      btn.textContent = expanded ? 'Mostra meno' : 'Mostra altro';
     }
 
     // Lightbox functions
