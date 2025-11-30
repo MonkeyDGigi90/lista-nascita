@@ -2,6 +2,7 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
 <title>Lista Nascita di Beatrice - Farmacroce</title>
 <style>
@@ -55,6 +56,22 @@
       .products-grid{grid-template-columns:1fr}
       .product img{height:110px}
       .product{max-height:360px}
+    }
+
+    /* Mobile-specific tweaks: larger touch targets, compact header and spacing */
+    @media (max-width: 480px) {
+      body{padding:12px}
+      .site-header{padding:8px 6px;text-align:left}
+      .logo{max-width:140px}
+      .header-top{justify-content:space-between;align-items:center;gap:8px}
+      .social svg{width:32px;height:32px}
+      .products-grid{gap:12px}
+      .product img{height:120px}
+      .product h3{font-size:1rem}
+      .product .desc{-webkit-line-clamp:4}
+      .product .add-btn{padding:12px;font-size:1rem;border-radius:8px}
+      .cart{width:100%;margin-top:12px}
+      #cart .cart-item .left strong{font-size:0.95rem}
     }
     .product h3{margin:0 0 6px;font-size:1.05rem}
     .product p{margin:4px 0;color:var(--muted)}
