@@ -44,12 +44,14 @@
     .product .meta{margin-top:4px}
     .product .add-btn{margin-top:auto}
 
-    @media (max-width: 900px) {
+    /* Adjust breakpoints to keep 3 columns on medium screens; switch to 2 columns
+       below 768px and to 1 column below 480px */
+    @media (max-width: 768px) {
       .products-grid{grid-template-columns:repeat(2,1fr)}
       .product img{height:140px}
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 480px) {
       .products-grid{grid-template-columns:1fr}
       .product img{height:110px}
       .product{max-height:360px}
