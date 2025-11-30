@@ -38,6 +38,9 @@
     .product .add-btn{width:100%;display:inline-block;padding:10px;border-radius:8px;background:var(--accent);color:#fff;border:none;cursor:pointer;font-weight:600}
     .product .add-btn[disabled]{opacity:0.7}
 
+    .product .desc{color:#374151;margin:8px 0 6px;font-size:0.95rem}
+    .product .meta{display:block;color:#6b7280;font-size:0.85rem}
+
     .cart{width:320px;background:linear-gradient(180deg,#ffffff,#fbfdff);border-radius:10px;padding:14px;border:1px solid #e2e8f0;box-shadow:0 6px 18px rgba(15,23,42,0.06)}
     .cart h2{margin:0 0 10px}
     #cart{list-style:none;padding:0;margin:0 0 12px}
@@ -115,19 +118,32 @@
           <p class="stock">Disponibili: 1</p>
           <button class="add-btn" onclick="addToCart('Zaino Mustela', 45.00)">Aggiungi al carrello</button>
         </div>
+          <div class="product" data-product="Chicco soluzione salina ipertonica" data-price="10" data-stock="1" data-sku="CH-001" data-brand="Chicco">
+            <img class="product-img" src="Chicco soluzione.jpg" alt="Chicco soluzione salina ipertonica" style="cursor: zoom-in;">
+            <h3>Chicco soluzione salina ipertonica</h3>
+            <p class="desc">Soluzione salina ipertonica per nebulizzazione e pulizia nasale del neonato, indicata per il sollievo delle vie respiratorie.</p>
+            <p>Prezzo: €10.00</p>
+            <small class="meta">Marca: Chicco · SKU: CH-001</small>
+            <p class="stock">Disponibili: 1</p>
+            <button class="add-btn" onclick="addToCart('Chicco soluzione salina ipertonica', 10)">Aggiungi al carrello</button>
+          </div>
 
-        <div class="product" data-product="Organizer passeggino Mustela" data-price="25.00" data-stock="1">
+        <div class="product" data-product="Organizer passeggino Mustela" data-price="25.00" data-stock="1" data-sku="MU-002" data-brand="Mustela">
           <img class="product-img" src="Organizer passeggino.jpg" alt="Organizer passeggino Mustela" style="cursor: zoom-in;">
           <h3>Organizer passeggino Mustela</h3>
+          <p class="desc">Pratico organizer da agganciare al passeggino con tasche multiple per biberon, pannolini e accessori.</p>
           <p>Prezzo: €25.00</p>
+          <small class="meta">Marca: Mustela · SKU: MU-002</small>
           <p class="stock">Disponibili: 1</p>
           <button class="add-btn" onclick="addToCart('Organizer passeggino Mustela', 25.00)">Aggiungi al carrello</button>
         </div>
 
-        <div class="product" data-product="Scatola in latta Mustela" data-price="15.00" data-stock="1">
+        <div class="product" data-product="Scatola in latta Mustela" data-price="15.00" data-stock="1" data-sku="MU-003" data-brand="Mustela">
           <img class="product-img" src="Scatola in latta.jpg" alt="Scatola in latta Mustela" style="cursor: zoom-in;">
           <h3>Scatola in latta Mustela</h3>
+          <p class="desc">Scatola in latta con design elegante, perfetta per confezionare piccoli regali o conservare accessori per il neonato.</p>
           <p>Prezzo: €15.00</p>
+          <small class="meta">Marca: Mustela · SKU: MU-003</small>
           <p class="stock">Disponibili: 1</p>
           <button class="add-btn" onclick="addToCart('Scatola in latta Mustela', 15.00)">Aggiungi al carrello</button>
         </div>
