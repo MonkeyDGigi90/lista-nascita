@@ -28,8 +28,12 @@
 
     .container{max-width:1100px;margin:0 auto;display:block}
     .main{display:flex;gap:20px;align-items:flex-start}
-    /* Products grid: three cards per row on desktop, responsive to 2/1 on smaller screens */
-    .products-grid{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+     /* Products grid: three cards per row on desktop, responsive to 2/1 on smaller screens
+       Use fixed 3-column layout and make each grid cell the same height so rows align */
+     .products-grid{flex:1;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:20px;align-items:stretch;justify-items:stretch}
+
+     /* Ensure each product fills its grid cell (equal height rows) */
+     .products-grid > .product{height:100%}
 
      /* Product card: set a sensible max-height to avoid cards that become too tall
        Clamp description text and hide overflow so cards remain uniform */
@@ -158,6 +162,16 @@
           <small class="meta">Marca: Mustela 
           <p class="stock">Disponibili: 1</p>
           <button class="add-btn" onclick="addToCart('Scatola in latta Mustela', 15.00)">Aggiungi al carrello</button>
+        </div>
+
+        <div class="product" data-product="Set Mustela crema solare con borsa frigo" data-price="25.00" data-stock="1" data-sku="MU-002" data-brand="Mustela">
+          <img class="product-img" src="Mustela borsa frigo.jpg" alt="Set Mustela crema solare con borsa frigo" style="cursor: zoom-in;">
+          <h3>Set Mustela crema solare con borsa frigo</h3>
+          <p class="desc">Mustela Kit Solare per tutta la famiglia comprende lo Spray Latte Solare SPF50 da 200ml e la pratica Borsa Frigo in R-pet certificato da portare sempre con te</p>
+          <p>Prezzo: €25.00</p>
+          <small class="meta">Marca: Mustela 
+          <p class="stock">Disponibili: 1</p>
+          <button class="add-btn" onclick="addToCart('Set Mustela crema solare con borsa frigo', 25.00)">Aggiungi al carrello</button>
         </div>
       </div>
 
