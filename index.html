@@ -135,12 +135,12 @@
     <div class="header-top">
       <img class="logo" src="Logo.jpg" alt="Logo Farmacroce">
       <div class="social" aria-hidden="false">
-        <a href="https://www.facebook.com/Farmacroce" target="_blank" rel="noopener" aria-label="Pagina Facebook Farmacroce">
+        <a href="https://www.facebook.com/people/Farmacroce-Rossi/61560597388942/" target="_blank" rel="noopener" aria-label="Pagina Facebook Farmacroce" onclick="event.preventDefault(); const isMobile=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent); window.location.href=isMobile?'fb://profile/61560597388942':'https://www.facebook.com/people/Farmacroce-Rossi/61560597388942/';">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" style="fill:#1877F2">
             <path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8.5v-3h2v-2.3c0-2 1.2-3.1 3-3.1.9 0 1.8.1 1.8.1v2h-1c-1 0-1.3.6-1.3 1.2V12h2.2l-.4 3h-1.8v7A10 10 0 0 0 22 12z"/>
           </svg>
         </a>
-        <a href="https://www.instagram.com/Farmacroce" target="_blank" rel="noopener" aria-label="Pagina Instagram Farmacroce">
+        <a href="https://www.instagram.com/Farmacroce" target="_blank" rel="noopener" aria-label="Pagina Instagram Farmacroce" onclick="event.preventDefault(); const isMobile=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent); window.location.href=isMobile?'instagram://user?username=Farmacroce':'https://www.instagram.com/Farmacroce';">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img">
             <defs>
               <linearGradient id="instaGrad" x1="0" y1="0" x2="1" y2="1">
@@ -172,14 +172,14 @@
         </div>
           <!-- Chicco soluzione rimossa come richiesto -->
 
-        <div class="product" data-product="Organizer passeggino Mustela" data-price="25.00" data-stock="1" data-sku="MU-002" data-brand="Mustela">
-          <img class="product-img" src="Organizer passeggino.jpg" alt="Organizer passeggino Mustela" style="cursor: zoom-in;">
-          <h3>Organizer passeggino Mustela</h3>
+        <div class="product" data-product="Organizer passeggino" data-price="25.00" data-stock="1" data-sku="MU-002" data-brand="Mustela">
+          <img class="product-img" src="Organizer passeggino.jpg" alt="Organizer passeggino" style="cursor: zoom-in;">
+          <h3>Organizer passeggino</h3>
           <p class="desc">Pratico organizer da agganciare al passeggino con tasche multiple per biberon, pannolini e accessori. Contenuto: Bagnetto mille bolle 200ml, Shampoo dolce 200ml.</p>
           <p class="price">Prezzo: €25.00</p>
           <small class="meta">Marca: Mustela</small>
           <p class="stock">Disponibili: 1</p>
-          <button class="add-btn" onclick="addToCart('Organizer passeggino Mustela', 25.00)">Aggiungi al carrello</button>
+          <button class="add-btn" onclick="addToCart('Organizer passeggino', 25.00)">Aggiungi al carrello</button>
         </div>
 
         <div class="product" data-product="Scatola in latta Mustela" data-price="15.00" data-stock="1" data-sku="MU-003" data-brand="Mustela">
@@ -206,10 +206,40 @@
           <img class="product-img" src="Bagno-corpo-Mustela.jpg" alt="Bagno corpo Mustela da 150 ml" style="cursor: zoom-in;">
           <h3>Bagno corpo Mustela da 150 ml</h3>
           <p class="desc">Mustela Detergente Delicato Corpo e Capelli è formulato per la detersione delicata di corpo e capelli, utilizzabile fin dalla nascita.</p>
-          <p class="price">Prezzo: €20.00</p>
+          <p class="price">Prezzo: €18.00</p>
           <small class="meta">Marca: Mustela</small>
           <p class="stock">Disponibili: 1</p>
-          <button class="add-btn" onclick="addToCart('Bagno corpo Mustela da 150 ml', 20.00)">Aggiungi al carrello</button>
+          <button class="add-btn" onclick="addToCart('Bagno corpo Mustela da 150 ml', 18.00)">Aggiungi al carrello</button>
+        </div>
+
+        <div class="product" data-product="Mustela acqua detergente 300ml" data-price="20.00" data-stock="1" data-sku="MU-002" data-brand="Mustela">
+          <img class="product-img" src="Mustela acqua.jpg" alt="Mustela acqua detergente 300ml" style="cursor: zoom-in;">
+          <h3>Mustela acqua detergente 300ml</h3>
+          <p class="desc">Acqua detergente con avocado biologico è il modo per rinfrescare rapidamente la pelle del vostro piccolo, senza risciacquo, senza residui appiccicosi.</p>
+          <p class="price">Prezzo: €14.00</p>
+          <small class="meta">Marca: Mustela</small>
+          <p class="stock">Disponibili: 1</p>
+          <button class="add-btn" onclick="addToCart('Mustela acqua detergente 300ml', 14.00)">Aggiungi al carrello</button>
+        </div>
+        
+        <div class="product" data-product="Stick Mustela labbra" data-price="20.00" data-stock="1" data-sku="MU-002" data-brand="Mustela">
+          <img class="product-img" src="Stick labbra.jpg" alt="Stick Mustela labbra" style="cursor: zoom-in;">
+          <h3>Stick Mustela labbra</h3>
+          <p class="desc">Labbra e zigomi sono spesso soggetti a secchezza e irritazioni dovute a condizioni climatiche difficili come vento, freddo o sbalzi di temperatura. Queste zone del viso, più esposte, necessitano di protezione e nutrimento per mantenere l'elasticità della pelle e prevenire screpolature e arrossamenti.</p>
+          <p class="price">Prezzo: €7.00</p>
+          <small class="meta">Marca: Mustela</small>
+          <p class="stock">Disponibili: 1</p>
+          <button class="add-btn" onclick="addToCart('Stick Mustela labbra', 7.00)">Aggiungi al carrello</button>
+        </div>
+
+        <div class="product" data-product="Crema solare 50+" data-price="20.00" data-stock="1" data-sku="MU-002" data-brand="Mustela">
+          <img class="product-img" src="Crema solare 50+.jpg" alt="Crema solare 50+" style="cursor: zoom-in;">
+          <h3>Crema solare 50+</h3>
+          <p class="desc">Offre una tripla fotoprotezione: difesa ad ampio spettro dai raggi UVA-UVB, protezione dai radicali liberi generati dai raggi IR e prevenzione dei danni biologici a lungo termine grazie al PRO-REPAIR Complex.</p>
+          <p class="price">Prezzo: €19.00</p>
+          <small class="meta">Marca: Mustela</small>
+          <p class="stock">Disponibili: 1</p>
+          <button class="add-btn" onclick="addToCart('Crema solare 50+', 19.00)">Aggiungi al carrello</button>
         </div>
       </div>
 
