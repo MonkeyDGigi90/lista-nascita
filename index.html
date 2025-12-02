@@ -29,33 +29,33 @@
 
     .container{max-width:1100px;margin:0 auto;display:block}
     .main{display:flex;gap:32px;align-items:flex-start}
-     /* Products grid: three cards per row on desktop, responsive to 2/1 on smaller screens
-       Use fixed 3-column layout and make each grid cell the same height so rows align */
+     /* Griglia prodotti: tre card per riga su desktop, responsive a 2/1 su schermi piccoli
+       Layout fisso a 3 colonne con celle di uguale altezza per allineare le righe */
      .products-grid{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:start;justify-items:stretch}
 
-     /* Ensure each product fills its grid cell */
+     /* Assicura che ogni prodotto riempia la sua cella */
      .products-grid > .product{width:100%}
 
-     /* Product card: set fixed height to make all cards uniform */
+     /* Card prodotto: altezza fissa per uniformare tutte le card */
      .product{background:var(--card-bg);border-radius:10px;padding:16px;border:1px solid #e6e9ef;box-shadow:0 2px 6px rgba(16,24,40,0.03);display:flex;flex-direction:column;justify-content:space-between;height:420px;overflow:hidden}
      .product img{width:100%;height:150px;object-fit:cover;border-radius:6px;margin-bottom:10px}
      .product h3{margin:6px 0}
      .product .desc{min-height:48px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;line-height:1.2rem;max-height:3.6rem;transition:max-height .18s ease}
     .product .desc.expanded{display:block;overflow:visible;max-height:9999px;-webkit-line-clamp:unset}
-    /* When description expands, allow card to grow */
+    /* Quando la descrizione si espande, permetti alla card di crescere */
     .product:has(.desc.expanded){max-height:none;overflow:visible;height:auto}
     .more-btn{background:none;border:none;color:var(--accent);cursor:pointer;padding:6px 0;font-weight:600}
     .product .meta{margin-top:4px}
     .product .add-btn{margin-top:auto}
 
-    /* Adjust breakpoints to keep 3 columns on medium screens; switch to 2 columns
-       below 768px and to 1 column below 480px */
+    /* Regola i breakpoint per mantenere 3 colonne su schermi medi; passa a 2 colonne
+       sotto 768px e a 1 colonna sotto 480px */
     @media (max-width: 768px) {
       .products-grid{grid-template-columns:repeat(2,1fr)}
       .product img{height:140px}
     }
 
-    /* Mobile-specific tweaks: larger touch targets, compact header and spacing */
+    /* Ottimizzazioni mobile: target touch più grandi, header compatto e spaziature */
     @media (max-width: 480px) {
       body{padding:12px}
       .site-header{padding:8px 6px;text-align:left}
@@ -63,7 +63,7 @@
       .header-top{justify-content:space-between;align-items:center;gap:8px}
       .social svg{width:32px;height:32px}
       .products-grid{gap:12px;grid-template-columns:1fr;grid-auto-rows:auto}
-      /* allow full flow on small screens so images and expanded descriptions are visible */
+      /* permetti overflow completo su schermi piccoli così immagini e descrizioni espanse sono visibili */
       .product{max-height:none!important;overflow:visible!important;height:auto!important;min-height:auto!important}
       .product img, .product-img, img.product-img{
         height:200px!important;
@@ -95,7 +95,7 @@
     .cart h2{margin:0 0 10px}
     #cart{list-style:none;padding:0;margin:0 0 12px}
     #cart li{margin:0;padding:0}
-    /* cart item layout */
+    /* layout elementi carrello */
     .cart .total{display:flex;align-items:center;justify-content:space-between;font-size:1.05rem;margin-top:8px}
     .cart button{border-radius:8px}
     #cart .cart-item{display:flex;justify-content:space-between;align-items:center;padding:8px;border-bottom:1px solid #e6e9ef}
@@ -107,13 +107,13 @@
     #cart .cart-item .controls button:hover{filter:brightness(.95)}
     #cart .cart-item .controls .qty-btn{width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;padding:0}
     #cart .cart-item .controls .remove-btn{background:#ef4444;color:#fff}
-    /* PayPal mark next to total */
+    /* Logo PayPal accanto al totale */
     .cart .total img{display:inline-block;margin-left:8px;height:28px;vertical-align:middle}
 
     #paypal-button-container{margin-top:10px}
     #paypal-mark{transition:opacity .2s}
 
-    /* Lightbox */
+    /* Lightbox (galleria immagini) */
     .lightbox{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,6,23,0.6);z-index:9999;opacity:0;pointer-events:none;transition:opacity .18s}
     .lightbox.open{opacity:1;pointer-events:auto}
     .lightbox-content{max-width:92%;max-height:92%;border-radius:8px;overflow:hidden;box-shadow:0 10px 40px rgba(2,6,23,0.6);background:#fff;padding:6px}
