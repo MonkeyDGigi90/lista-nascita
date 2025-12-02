@@ -31,14 +31,14 @@
     .main{display:flex;gap:20px;align-items:flex-start}
      /* Products grid: three cards per row on desktop, responsive to 2/1 on smaller screens
        Use fixed 3-column layout and make each grid cell the same height so rows align */
-     .products-grid{flex:1;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:20px;align-items:stretch;justify-items:stretch}
+     .products-grid{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start;justify-items:stretch}
 
-     /* Ensure each product fills its grid cell (equal height rows) */
-     .products-grid > .product{height:100%}
+     /* Ensure each product fills its grid cell */
+     .products-grid > .product{width:100%}
 
      /* Product card: set a sensible max-height to avoid cards that become too tall
        Clamp description text and hide overflow so cards remain uniform */
-     .product{background:var(--card-bg);border-radius:10px;padding:12px;border:1px solid #e6e9ef;box-shadow:0 2px 6px rgba(16,24,40,0.03);display:flex;flex-direction:column;justify-content:space-between;height:100%;max-height:420px;overflow:hidden}
+     .product{background:var(--card-bg);border-radius:10px;padding:12px;border:1px solid #e6e9ef;box-shadow:0 2px 6px rgba(16,24,40,0.03);display:flex;flex-direction:column;justify-content:space-between;min-height:380px;max-height:420px;overflow:hidden}
      .product img{width:100%;height:150px;object-fit:cover;border-radius:6px;margin-bottom:10px}
      .product h3{margin:6px 0}
      .product .desc{min-height:48px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;line-height:1.2rem;max-height:3.6rem;transition:max-height .18s ease}
@@ -201,6 +201,16 @@
           <small class="meta">Marca: Mustela 
           <p class="stock">Disponibili: 1</p>
           <button class="add-btn" onclick="addToCart('Set Mustela crema solare con borsa frigo', 25.00)">Aggiungi al carrello</button>
+        </div>
+
+        <div class="product" data-product="Bagno corpo Mustela da 150 ml" data-price="20.00" data-stock="1" data-sku="MU-002" data-brand="Mustela">
+          <img class="product-img" src="Bagno corpo Mustela.jpg" alt="Bagno corpo Mustela da 150 ml" style="cursor: zoom-in;">
+          <h3>Bagno corpo Mustela da 150 ml</h3>
+          <p class="desc">Mustela Detergente Delicato Corpo e Capelli è formulato per la detersione delicata di corpo e capelli, utilizzabile fin dalla nascita.</p>
+          <p class="price">Prezzo: €20.00</p>
+          <small class="meta">Marca: Mustela 
+          <p class="stock">Disponibili: 1</p>
+          <button class="add-btn" onclick="addToCart('Bagno corpo Mustela da 150 ml', 20.00)">Aggiungi al carrello</button>
         </div>
       </div>
 
