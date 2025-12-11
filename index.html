@@ -232,12 +232,12 @@
           <button class="add-btn" onclick="addToCart('Stick Mustela labbra', 7.00)">Aggiungi al carrello</button>
         </div>
 
-        <div class="product" data-product="Crema solare 50+" data-price="20.00" data-stock="1" data-sku="MU-002" data-brand="Mustela">
+        <div class="product" data-product="Crema solare 50+" data-price="20.00" data-stock="1" data-sku="MU-002" data-brand="BioNike">
           <img class="product-img" src="Crema-solare-50plus.jpg" alt="Crema solare 50+" style="cursor: zoom-in;">
           <h3>Crema solare 50+</h3>
           <p class="desc">Offre una tripla fotoprotezione: difesa ad ampio spettro dai raggi UVA-UVB, protezione dai radicali liberi generati dai raggi IR e prevenzione dei danni biologici a lungo termine grazie al PRO-REPAIR Complex.</p>
           <p class="price">Prezzo: €19.00</p>
-          <small class="meta">Marca: Mustela</small>
+          <small class="meta">Marca: BioNike</small>
           <p class="stock">Disponibili: 1</p>
           <button class="add-btn" onclick="addToCart('Crema solare 50+', 19.00)">Aggiungi al carrello</button>
         </div>
@@ -252,14 +252,14 @@
           <button class="add-btn" onclick="addToCart('Repellente zanzare', 13.00)">Aggiungi al carrello</button>
         </div>
 
-        <div class="product" data-product="Repellente zanzare" data-price="20.00" data-stock="1" data-sku="MU-002" data-brand="Mustela">
-          <img class="product-img" src="Mustela zanzare.jpg" alt="Repellente zanzare" style="cursor: zoom-in;">
-          <h3>Repellente zanzare</h3>
-          <p class="desc">Durata fino a 8 ore di protezione contro zanzare, zanzare tigre e fino a 7 ore di protezione contro le zecche senza profumo e senza alcol.</p>
-          <p class="price">Prezzo: €13.00</p>
-          <small class="meta">Marca: Mustela</small>
+        <div class="product" data-product="Dissuasore zanzare portatile" data-price="20.00" data-stock="1" data-sku="MU-002" data-brand="Chicco">
+          <img class="product-img" src="Dissuasore.jpg" alt="Dissuasore zanzare portatile" style="cursor: zoom-in;">
+          <h3>Dissuasore zanzare portatile</h3>
+          <p class="desc">Il dispositivo antizanzare portatile di Chicco utilizza gli ultrasuoni all’aria aperta e si installa facilmente con una pratica clip da agganciare alla carrozzina o al passeggino. Privo di effetti indesiderati e totalmente sicuro anche per i più piccoli, l’antizanzare portatile a ultrasuoni Chicco funziona con batteria alcalina da 1.5 V della durata di circa 100 ore.</p>
+          <p class="price">Prezzo: €15.00</p>
+          <small class="meta">Marca: Chicco</small>
           <p class="stock">Disponibili: 1</p>
-          <button class="add-btn" onclick="addToCart('Repellente zanzare', 13.00)">Aggiungi al carrello</button>
+          <button class="add-btn" onclick="addToCart('Dissuasore zanzare portatile', 15.00)">Aggiungi al carrello</button>
         </div>
       </div>
 
@@ -284,8 +284,11 @@
     </div>
   </div>
 
-  <!-- PayPal SDK - modalità Sandbox per test locale -->
-  <script src="https://www.paypal.com/sdk/js?client-id=sb&amp;currency=EUR" data-uid-auto="uid_mwrfqkrdjrrjdriisejljfrdcclpzf"></script>
+  <!-- PayPal SDK - IMPORTANTE: Sostituisci 'YOUR-CLIENT-ID' con il tuo Client ID reale da PayPal Dashboard
+       Per ottenere il Client ID: https://developer.paypal.com/ > My Apps & Credentials > Live > Create App -->
+  <script src="https://www.paypal.com/sdk/js?client-id=YOUR-CLIENT-ID&amp;currency=EUR"></script>
+  <!-- MODALITÀ TEST (attualmente attiva): -->
+  <!-- <script src="https://www.paypal.com/sdk/js?client-id=sb&amp;currency=EUR"></script> -->
   <script>
     let cart = [];
     const products = {};
