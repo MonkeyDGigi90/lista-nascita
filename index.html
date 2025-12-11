@@ -503,6 +503,8 @@
             const total = getTotal().toFixed(2);
             return actions.order.create({
               purchase_units: [{
+                description: 'Lista Nascita di Beatrice',
+                soft_descriptor: 'LISTA BEATRICE',
                 amount: {
                   currency_code: 'EUR',
                   value: total,
