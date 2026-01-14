@@ -433,87 +433,43 @@
     let cart = [];
     const products = {};
     let paypalButtonsRendered = false;
-    const BACKEND_URL = 'http://localhost:3000/api'; // Cambia questo URL in produzione
 
-    // Carica prodotti dal backend al primo avvio
-    async function initProducts() {
-      try {
-        const response = await fetch(`${BACKEND_URL}/products`);
-        if (!response.ok) throw new Error('Errore caricamento backend');
+    // Carica prodotti dal HTML
+    function initProducts() {
+      const productDivs = document.querySelectorAll('#products .product');
+      productDivs.forEach(div => {
+        const name = div.getAttribute('data-product');
+        const price = parseFloat(div.getAttribute('data-price')) || 0;
+        const stock = parseInt(div.getAttribute('data-stock'), 10) || 0;
         
-        const productsFromDB = await response.json();
-        const productDivs = document.querySelectorAll('#products .product');
+        products[name] = { price, stock, element: div };
+        updateStockDisplay(name);
         
-        productDivs.forEach(div => {
-          const name = div.getAttribute('data-product');
-          const price = parseFloat(div.getAttribute('data-price')) || 0;
-          
-          // Usa stock dal database se disponibile, altrimenti dal HTML
-          const dbProduct = productsFromDB.find(p => p.product_name === name);
-          const stock = dbProduct ? dbProduct.stock : (parseInt(div.getAttribute('data-stock'), 10) || 0);
-          
-          products[name] = { price, stock, element: div };
-          updateStockDisplay(name);
-          // attacca evento click per lightbox sull'immagine del prodotto
-          const img = div.querySelector('.product-img') || div.querySelector('img');
-          if (img) {
-            img.style.cursor = 'zoom-in';
-            img.addEventListener('click', function() {
-              openLightbox(this.src, this.alt || name);
-            });
-          }
+        // attacca evento click per lightbox sull'immagine del prodotto
+        const img = div.querySelector('.product-img') || div.querySelector('img');
+        if (img) {
+          img.style.cursor = 'zoom-in';
+          img.addEventListener('click', function() {
+            openLightbox(this.src, this.alt || name);
+          });
+        }
 
-          // aggiungi pulsante "Mostra altro" se la descrizione è lunga
-          const desc = div.querySelector('.desc');
-          if (desc) {
-            const text = desc.textContent || '';
-            if (text.length > 120) {
-              const btn = document.createElement('button');
-              btn.className = 'more-btn';
-              btn.type = 'button';
-              btn.textContent = 'Mostra altro';
-              btn.addEventListener('click', function() { toggleDesc(this); });
-              // inserisci il bottone subito dopo la descrizione
-              if (desc.nextSibling) desc.parentNode.insertBefore(btn, desc.nextSibling);
-              else desc.parentNode.appendChild(btn);
-            }
+        // aggiungi pulsante "Mostra altro" se la descrizione è lunga
+        const desc = div.querySelector('.desc');
+        if (desc) {
+          const text = desc.textContent || '';
+          if (text.length > 120) {
+            const btn = document.createElement('button');
+            btn.className = 'more-btn';
+            btn.type = 'button';
+            btn.textContent = 'Mostra altro';
+            btn.addEventListener('click', function() { toggleDesc(this); });
+            // inserisci il bottone subito dopo la descrizione
+            if (desc.nextSibling) desc.parentNode.insertBefore(btn, desc.nextSibling);
+            else desc.parentNode.appendChild(btn);
           }
-        });
-      } catch (error) {
-        console.error('Errore caricamento prodotti:', error);
-        // Se il backend non è disponibile, usa lo stock dal HTML
-        const productDivs = document.querySelectorAll('#products .product');
-        productDivs.forEach(div => {
-          const name = div.getAttribute('data-product');
-          const price = parseFloat(div.getAttribute('data-price')) || 0;
-          const stock = parseInt(div.getAttribute('data-stock'), 10) || 0;
-          
-          products[name] = { price, stock, element: div };
-          updateStockDisplay(name);
-          
-          const img = div.querySelector('.product-img') || div.querySelector('img');
-          if (img) {
-            img.style.cursor = 'zoom-in';
-            img.addEventListener('click', function() {
-              openLightbox(this.src, this.alt || name);
-            });
-          }
-
-          const desc = div.querySelector('.desc');
-          if (desc) {
-            const text = desc.textContent || '';
-            if (text.length > 120) {
-              const btn = document.createElement('button');
-              btn.className = 'more-btn';
-              btn.type = 'button';
-              btn.textContent = 'Mostra altro';
-              btn.addEventListener('click', function() { toggleDesc(this); });
-              if (desc.nextSibling) desc.parentNode.insertBefore(btn, desc.nextSibling);
-              else desc.parentNode.appendChild(btn);
-            }
-          }
-        });
-      }
+        }
+      });
     }
 
     function toggleDesc(btn) {
@@ -713,9 +669,6 @@
             const amount = details.purchase_units && details.purchase_units[0] && details.purchase_units[0].amount && details.purchase_units[0].amount.value;
             const orderId = details.id;
             
-            // Invia i dati dell'ordine al backend per aggiornare lo stock
-            sendOrderToBackend(details);
-            
             // Cambia i bottoni a "Regalato" per i prodotti acquistati
             const purchasedItems = details.purchase_units && details.purchase_units[0] && details.purchase_units[0].items || [];
             purchasedItems.forEach(item => {
@@ -752,36 +705,6 @@
     // Invia ordine al backend per aggiornare lo stock
     async function sendOrderToBackend(paypalDetails) {
       try {
-        const items = paypalDetails.purchase_units[0].items || [];
-        const webhook = {
-          event_type: 'PAYMENT.CAPTURE.COMPLETED',
-          resource: {
-            id: paypalDetails.id,
-            purchase_units: [{
-              items: items
-            }]
-          }
-        };
-        
-        const response = await fetch(`${BACKEND_URL}/paypal-webhook`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(webhook)
-        });
-        
-        if (response.ok) {
-          console.log('✓ Ordine registrato e stock aggiornato');
-        } else {
-          console.error('Errore aggiornamento stock sul backend');
-        }
-      } catch (error) {
-        console.error('Errore comunicazione con backend:', error);
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      initProducts();
-      renderCart();
     });
   </script>
 </body>
