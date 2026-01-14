@@ -702,9 +702,9 @@
       paypalButtonsRendered = true;
     }
 
-    // Invia ordine al backend per aggiornare lo stock
-    async function sendOrderToBackend(paypalDetails) {
-      try {
+    document.addEventListener('DOMContentLoaded', function() {
+      initProducts();
+      renderCart();
     });
   </script>
 </body>
