@@ -681,6 +681,22 @@
             // Invia i dati dell'ordine al backend per aggiornare lo stock
             sendOrderToBackend(details);
             
+            // Cambia i bottoni a "Regalato" per i prodotti acquistati
+            const purchasedItems = details.purchase_units && details.purchase_units[0] && details.purchase_units[0].items || [];
+            purchasedItems.forEach(item => {
+              const productName = item.name;
+              const p = products[productName];
+              if (p) {
+                const btn = p.element.querySelector('button.add-btn');
+                if (btn) {
+                  btn.disabled = true;
+                  btn.textContent = 'Regalato';
+                  btn.style.background = '#999';
+                  btn.style.cursor = 'default';
+                }
+              }
+            });
+            
             alert('Grazie ' + buyer + '! Il pagamento di €' + amount + ' è stato completato con successo.\n\nNumero ordine: ' + orderId);
             cart = [];
             // dopo pagamento non ripristiniamo stock (sono considerati venduti/regalati)
