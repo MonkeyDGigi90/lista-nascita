@@ -222,14 +222,14 @@
           <button class="add-btn" onclick="addToCart('Mustela acqua detergente 300ml', 14.00)">Aggiungi al carrello</button>
         </div>
         
-        <div class="product" data-product="Stick Mustela labbra" data-price="7.00" data-stock="1" data-sku="MU-002" data-brand="Mustela">
+        <div class="product" data-product="Stick Mustela labbra" data-price="7.00" data-stock="0" data-sku="MU-002" data-brand="Mustela">
           <img class="product-img" src="Stick-labbra.jpg" alt="Stick Mustela labbra" style="cursor: zoom-in;">
           <h3>Stick Mustela labbra</h3>
           <p class="desc">Labbra e zigomi sono spesso soggetti a secchezza e irritazioni dovute a condizioni climatiche difficili come vento, freddo o sbalzi di temperatura. Queste zone del viso, più esposte, necessitano di protezione e nutrimento per mantenere l'elasticità della pelle e prevenire screpolature e arrossamenti.</p>
           <p class="price">Prezzo: €7.00</p>
           <small class="meta">Marca: Mustela</small>
-          <p class="stock">Disponibili: 1</p>
-          <button class="add-btn" onclick="addToCart('Stick Mustela labbra', 7.00)">Aggiungi al carrello</button>
+          <p class="stock">Disponibili: 0</p>
+          <button class="add-btn" onclick="addToCart('Stick Mustela labbra', 7.00)" disabled>Aggiungi al carrello</button>
         </div>
 
         <div class="product" data-product="Crema solare 50+" data-price="19.00" data-stock="1" data-sku="MU-002" data-brand="BioNike">
@@ -433,16 +433,28 @@
     let cart = [];
     const products = {};
     let paypalButtonsRendered = false;
+    const BACKEND_URL = 'http://localhost:3000/api'; // Cambia questo URL in produzione
 
-    function initProducts() {
-      const productDivs = document.querySelectorAll('#products .product');
-      productDivs.forEach(div => {
-        const name = div.getAttribute('data-product');
-        const price = parseFloat(div.getAttribute('data-price')) || 0;
-        const stock = parseInt(div.getAttribute('data-stock'), 10) || 0;
-        products[name] = { price, stock, element: div };
-        updateStockDisplay(name);
-        // attacca evento click per lightbox sull'immagine del prodotto
+    // Carica prodotti dal backend al primo avvio
+    async function initProducts() {
+      try {
+        const response = await fetch(`${BACKEND_URL}/products`);
+        if (!response.ok) throw new Error('Errore caricamento backend');
+        
+        const productsFromDB = await response.json();
+        const productDivs = document.querySelectorAll('#products .product');
+        
+        productDivs.forEach(div => {
+          const name = div.getAttribute('data-product');
+          const price = parseFloat(div.getAttribute('data-price')) || 0;
+          
+          // Usa stock dal database se disponibile, altrimenti dal HTML
+          const dbProduct = productsFromDB.find(p => p.product_name === name);
+          const stock = dbProduct ? dbProduct.stock : (parseInt(div.getAttribute('data-stock'), 10) || 0);
+          
+          products[name] = { price, stock, element: div };
+          updateStockDisplay(name);
+          // attacca evento click per lightbox sull'immagine del prodotto
         const img = div.querySelector('.product-img') || div.querySelector('img');
         if (img) {
           img.style.cursor = 'zoom-in';
@@ -664,7 +676,12 @@
           return actions.order.capture().then(function(details) {
             const buyer = (details.payer && details.payer.name && details.payer.name.given_name) || 'Cliente';
             const amount = details.purchase_units && details.purchase_units[0] && details.purchase_units[0].amount && details.purchase_units[0].amount.value;
-            alert('Grazie ' + buyer + '! Il pagamento di €' + amount + ' è stato completato con successo.\n\nNumero ordine: ' + details.id);
+            const orderId = details.id;
+            
+            // Invia i dati dell'ordine al backend per aggiornare lo stock
+            sendOrderToBackend(details);
+            
+            alert('Grazie ' + buyer + '! Il pagamento di €' + amount + ' è stato completato con successo.\n\nNumero ordine: ' + orderId);
             cart = [];
             // dopo pagamento non ripristiniamo stock (sono considerati venduti/regalati)
             renderCart();
@@ -679,6 +696,36 @@
       }).render('#paypal-button-container');
 
       paypalButtonsRendered = true;
+    }
+
+    // Invia ordine al backend per aggiornare lo stock
+    async function sendOrderToBackend(paypalDetails) {
+      try {
+        const items = paypalDetails.purchase_units[0].items || [];
+        const webhook = {
+          event_type: 'PAYMENT.CAPTURE.COMPLETED',
+          resource: {
+            id: paypalDetails.id,
+            purchase_units: [{
+              items: items
+            }]
+          }
+        };
+        
+        const response = await fetch(`${BACKEND_URL}/paypal-webhook`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(webhook)
+        });
+        
+        if (response.ok) {
+          console.log('✓ Ordine registrato e stock aggiornato');
+        } else {
+          console.error('Errore aggiornamento stock sul backend');
+        }
+      } catch (error) {
+        console.error('Errore comunicazione con backend:', error);
+      }
     }
 
     document.addEventListener('DOMContentLoaded', function() {
