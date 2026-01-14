@@ -552,6 +552,16 @@
       p.stock -= 1;
       updateStockDisplay(product);
       renderCart();
+      
+      // Su smartphone, scorri automaticamente al carrello
+      if (window.innerWidth < 880) {
+        const cartSection = document.querySelector('.cart');
+        if (cartSection) {
+          setTimeout(() => {
+            cartSection.scrollIntoView({ behavior: 'smooth' });
+          }, 300);
+        }
+      }
     }
 
     function removeFromCart(index) {
