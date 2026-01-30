@@ -126,7 +126,7 @@ function initializeProducts() {
     { product_name: 'Repellente zanzare', price: 13.00, stock: 1, sku: 'MU-009', brand: 'Mustela', description: 'Durata fino a 8 ore di protezione contro zanzare.', image: 'Mustela zanzare.jpg' },
     { product_name: 'Dissuasore zanzare portatile', price: 15.00, stock: 1, sku: 'CH-001', brand: 'Chicco', description: 'Dispositivo antizanzare portatile con ultrasuoni.', image: 'Dissuasore.jpg' },
     { product_name: 'Zanzariera Chicco per passeggino', price: 10.00, stock: 1, sku: 'CH-002', brand: 'Chicco', description: 'Zanzariera Chicco utilissima per proteggere il passeggino.', image: 'Zanzariera-Chicco.jpg' },
-    { product_name: 'Fascia porta bimbo Chicco', price: 70.00, stock: 1, sku: 'CH-003', brand: 'Chicco', description: 'Chicco Boppy Comfyfit Portabebè BL.', image: 'Fascia-porta-bimbo.jpg' },
+    { product_name: 'Fascia porta bimbo Chicco', price: 70.00, stock: 0, sku: 'CH-003', brand: 'Chicco', description: 'Chicco Boppy Comfyfit Portabebè BL.', image: 'Fascia-porta-bimbo.jpg' },
     { product_name: 'Giostrina Next to Dreams Chicco', price: 35.00, stock: 1, sku: 'CH-004', brand: 'Chicco', description: 'Giostrina musicale progettata per adattarsi alla culla Next2Me.', image: 'Giostrina-Chicco.png' },
     { product_name: 'Giraffa Chicco', price: 20.00, stock: 1, sku: 'CH-005', brand: 'Chicco', description: 'Fune Passeggio Mrs Giraffa realizzata in morbido tessuto.', image: 'Chicco-Giraffa.jpg' },
     { product_name: 'Set igiene panda', price: 10.00, stock: 1, sku: 'CH-006', brand: 'Chicco', description: 'Kit completo per l\'igiene e la cura delle unghie dei bambini.', image: 'Set-igiene-panda.jpg' },
