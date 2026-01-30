@@ -382,14 +382,14 @@
           <button class="add-btn" onclick="addToCart('Dentinale', 13.00)">Aggiungi al carrello</button>
         </div>
 
-        <div class="product" data-product="Seggiolino auto Chicco Quizy" data-price="95.00" data-stock="1" data-sku="CH-015" data-brand="Chicco">
+        <div class="product" data-product="Seggiolino auto Chicco Quizy" data-price="95.00" data-stock="0" data-sku="CH-015" data-brand="Chicco">
           <img class="product-img" src="Seggiolino-Chicco.jpg" alt="Seggiolino auto Chicco Quizy" style="cursor: zoom-in;">
           <h3>Seggiolino auto Chicco Quizy</h3>
           <p class="desc">Rialzo auto con schienale ultra-leggero (solo 4,5 kg) che rende semplice il trasferimento tra diverse auto. Compatibile con auto con e senza ganci Isofix. L'Easy-Extend Headrest System è progettato per regolare facilmente il seggiolino, permettendo di adattarsi all'altezza crescente del bambino e garantendo una adattabilità perfetta fino a 12 anni. Massimo comfort a bordo grazie alle 2 posizioni di reclinazione, che permettono di personalizzare l'angolo della seduta garantendo un viaggio più rilassante e piacevole per il bambino. La seduta ed i braccioli imbottiti e morbidi offrono un comfort extra garantendo inoltre un supporto migliorato per tenere il bambino saldamente in posizione.</p>
           <p class="price">Prezzo: €95.00</p>
           <small class="meta">Marca: Chicco</small>
-          <p class="stock">Disponibili: 1</p>
-          <button class="add-btn" onclick="addToCart('Seggiolino auto Chicco Quizy', 95.00)">Aggiungi al carrello</button>
+          <p class="stock">Regalato</p>
+          <button class="add-btn" onclick="addToCart('Seggiolino auto Chicco Quizy', 95.00)" disabled style="background: #999; cursor: default;">Regalato</button>
         </div>
 
         <div class="product" data-product="Seggiolino auto Chicco Fold & Go" data-price="170.00" data-stock="1" data-sku="CH-016" data-brand="Chicco">
@@ -433,6 +433,27 @@
     let cart = [];
     const products = {};
     let paypalButtonsRendered = false;
+
+    // Sincronizza lo stock con il backend
+    async function syncStockFromBackend() {
+      try {
+        const response = await fetch('/api/products');
+        if (!response.ok) throw new Error('Errore nel fetch dei prodotti');
+        const backendProducts = await response.json();
+        
+        // Aggiorna lo stock locale con i dati dal backend
+        backendProducts.forEach(product => {
+          if (products[product.product_name]) {
+            products[product.product_name].stock = product.stock;
+          }
+        });
+        
+        // Aggiorna la visualizzazione per tutti i prodotti
+        Object.keys(products).forEach(name => updateStockDisplay(name));
+      } catch (error) {
+        console.error('Errore sincronizzazione stock:', error);
+      }
+    }
 
     // Carica prodotti dal HTML
     function initProducts() {
@@ -681,24 +702,29 @@
             
             // Cambia i bottoni a "Regalato" per i prodotti acquistati
             const purchasedItems = details.purchase_units && details.purchase_units[0] && details.purchase_units[0].items || [];
+            console.log('Purchased items:', purchasedItems);
             purchasedItems.forEach(item => {
               const productName = item.name;
+              console.log('Updating product:', productName);
               const p = products[productName];
               if (p) {
-                const btn = p.element.querySelector('button.add-btn');
-                if (btn) {
-                  btn.disabled = true;
-                  btn.textContent = 'Regalato';
-                  btn.style.background = '#999';
-                  btn.style.cursor = 'default';
-                }
+                console.log('Found product:', productName, 'setting stock to 0');
+                p.stock = 0;
+                updateStockDisplay(productName);
+              } else {
+                console.warn('Product not found in products object:', productName);
               }
             });
             
-            alert('Grazie ' + buyer + '! Il pagamento di €' + amount + ' è stato completato con successo.\n\nNumero ordine: ' + orderId);
+            alert('Grazie ' + buyer + '! Il pagamento di €' + amount + ' è stato completato con successo.\n\nNumero ordine: ' + orderId + '\n\nLa pagina si ricaricherà tra 2 secondi.');
             cart = [];
             // dopo pagamento non ripristiniamo stock (sono considerati venduti/regalati)
             renderCart();
+            
+            // Ricarica la pagina dopo 2 secondi per sincronizzare con il backend
+            setTimeout(() => {
+              location.reload();
+            }, 2000);
           });
         },
         onError: function(err) {
@@ -714,6 +740,7 @@
 
     document.addEventListener('DOMContentLoaded', function() {
       initProducts();
+      syncStockFromBackend();
       renderCart();
     });
   </script>
