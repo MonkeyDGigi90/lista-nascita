@@ -424,6 +424,31 @@
     </div>
   </div>
 
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, setDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDTMKNgFSxyCD24gC-qMWdvEvVEeLj9jM4",
+      authDomain: "lista-nascita-bc16a.firebaseapp.com",
+      projectId: "lista-nascita-bc16a",
+      storageBucket: "lista-nascita-bc16a.firebasestorage.app",
+      messagingSenderId: "369160057605",
+      appId: "1:369160057605:web:650a6a68d9acce07a0bd6c",
+      measurementId: "G-QMJ24771MV"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Rendi disponibile globalmente
+    window.db = db;
+    window.firebaseModules = { collection, getDocs, setDoc, doc, updateDoc };
+
+    console.log("Firebase inizializzato con successo!");
+  </script>
+
   <!-- PayPal SDK - IMPORTANTE: Sostituisci 'YOUR-CLIENT-ID' con il tuo Client ID reale da PayPal Dashboard
        Per ottenere il Client ID: https://developer.paypal.com/ > My Apps & Credentials > Live > Create App -->
   <script src="https://www.paypal.com/sdk/js?client-id=AdAPX2hi2eW_ekYfHQ4UpLXHiXX25WW5JUQEr6P9wcep-nYTGEm0hJaeBTE_jNNJnT7pBKdxEmjegTE_&amp;currency=EUR"></script>
@@ -434,17 +459,19 @@
     const products = {};
     let paypalButtonsRendered = false;
 
-    // Sincronizza lo stock con il backend
+    // Sincronizza lo stock con Firestore
     async function syncStockFromBackend() {
       try {
-        const response = await fetch('/api/products');
-        if (!response.ok) throw new Error('Errore nel fetch dei prodotti');
-        const backendProducts = await response.json();
+        const { getDocs, collection } = window.firebaseModules;
+        const querySnapshot = await getDocs(collection(window.db, "products"));
         
-        // Aggiorna lo stock locale con i dati dal backend
-        backendProducts.forEach(product => {
-          if (products[product.product_name]) {
-            products[product.product_name].stock = product.stock;
+        querySnapshot.forEach(docSnapshot => {
+          const product = docSnapshot.data();
+          const productName = product.product_name;
+          
+          if (products[productName]) {
+            products[productName].stock = product.stock || 0;
+            console.log(`Stock sincronizzato per ${productName}: ${product.stock}`);
           }
         });
         
@@ -695,7 +722,7 @@
             });
           },
         onApprove: function(data, actions) {
-          return actions.order.capture().then(function(details) {
+          return actions.order.capture().then(async function(details) {
             const buyer = (details.payer && details.payer.name && details.payer.name.given_name) || 'Cliente';
             const amount = details.purchase_units && details.purchase_units[0] && details.purchase_units[0].amount && details.purchase_units[0].amount.value;
             const orderId = details.id;
@@ -703,25 +730,58 @@
             // Cambia i bottoni a "Regalato" per i prodotti acquistati
             const purchasedItems = details.purchase_units && details.purchase_units[0] && details.purchase_units[0].items || [];
             console.log('Purchased items:', purchasedItems);
+            
+            const { setDoc, doc, updateDoc } = window.firebaseModules;
+            
+            // Salva l'ordine su Firestore
+            try {
+              await setDoc(doc(window.db, "orders", orderId), {
+                buyer_name: buyer,
+                total: parseFloat(amount),
+                items: purchasedItems.map(item => ({
+                  name: item.name,
+                  quantity: parseInt(item.quantity) || 1,
+                  price: parseFloat(item.unit_amount.value)
+                })),
+                created_at: new Date().toISOString(),
+                status: 'completed'
+              });
+              console.log('Ordine salvato su Firestore:', orderId);
+            } catch (error) {
+              console.error('Errore salvataggio ordine:', error);
+            }
+            
+            // Aggiorna lo stock su Firestore per ogni articolo
+            for (const item of purchasedItems) {
+              const productName = item.name;
+              const quantity = parseInt(item.quantity) || 1;
+              console.log('Updating product:', productName, 'quantity:', quantity);
+              
+              try {
+                await updateDoc(doc(window.db, "products", productName), {
+                  stock: 0  // Imposta stock a 0 (regalato)
+                });
+                console.log(`Stock aggiornato su Firestore per: ${productName}`);
+              } catch (error) {
+                console.error(`Errore aggiornamento stock per ${productName}:`, error);
+              }
+            }
+            
+            // Aggiorna localmente
             purchasedItems.forEach(item => {
               const productName = item.name;
-              console.log('Updating product:', productName);
               const p = products[productName];
               if (p) {
-                console.log('Found product:', productName, 'setting stock to 0');
                 p.stock = 0;
                 updateStockDisplay(productName);
-              } else {
-                console.warn('Product not found in products object:', productName);
               }
             });
             
             alert('Grazie ' + buyer + '! Il pagamento di €' + amount + ' è stato completato con successo.\n\nNumero ordine: ' + orderId + '\n\nLa pagina si ricaricherà tra 2 secondi.');
             cart = [];
-            // dopo pagamento non ripristiniamo stock (sono considerati venduti/regalati)
             renderCart();
             
-            // Ricarica la pagina dopo 2 secondi per sincronizzare con il backend
+            // Ricarica la pagina dopo 2 secondi per sincronizzare con Firestore
             setTimeout(() => {
               location.reload();
             }, 2000);
