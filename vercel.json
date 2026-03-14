@@ -1,7 +1,7 @@
 {
   "buildCommand": "",
   "outputDirectory": ".",
-  "framework": "html",
+  "framework": null,
   "public": true,
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
