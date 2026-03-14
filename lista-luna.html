@@ -6,6 +6,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
 <title>Lista Nascita Luna - Farmacroce</title>
 <style>
+      .home-link { display:inline-block;padding:6px 16px;border-radius:8px;background:#f6f7fb;color:#009966;font-weight:600;text-decoration:none;box-shadow:0 1px 4px rgba(16,24,40,0.04); }
     :root{
       --accent:#d47fa6;
       --muted:#6b7280;
@@ -59,8 +60,12 @@
     @media (max-width: 480px) {
       body{padding:12px}
       .site-header{padding:8px 6px;text-align:left}
-      .logo{max-width:110px}
-      .header-top{justify-content:space-between;align-items:center;gap:8px}
+      .logo{max-width:110px;display:block;margin:0 auto 8px;float:none}
+      .header-top{justify-content:center;align-items:center;gap:18px;flex-direction:row;}
+        .site-header{padding:8px 6px;text-align:center}
+        .header-top a, .header-top .logo, .header-top .social { margin: 0 8px !important; }
+        .social { display: flex; gap: 10px; justify-content: center; }
+        h1 { font-size: 1.08rem; text-align: center; white-space: normal; }
       .social svg{width:32px;height:32px}
       .products-grid{gap:12px;grid-template-columns:1fr;grid-auto-rows:auto}
       /* permetti overflow completo su schermi piccoli così immagini e descrizioni espanse sono visibili */
@@ -136,8 +141,8 @@
     <!-- Nota: mettere le immagini prodotto nella cartella `img/` con i nomi suggeriti.
       Esempi: `img/crema-idratante-baby.jpg`, `img/set-biberon.jpg`, `img/pannolini-bio.jpg` -->
   <div class="site-header">
-    <div class="header-top" style="justify-content:space-between;">
-      <a href="index.html" style="display:inline-block;padding:6px 16px;border-radius:8px;background:#f6f7fb;color:#009966;font-weight:600;text-decoration:none;box-shadow:0 1px 4px rgba(16,24,40,0.04);margin-right:12px;">🏠 Home</a>
+    <div class="header-top">
+      <a href="index.html" class="home-link">🏠 Home</a>
       <img class="logo" src="Logo.jpg" alt="Logo Farmacroce">
       <div class="social" aria-hidden="false">
         <a href="fb://profile/61560597388942" target="_blank" rel="noopener" aria-label="Pagina Facebook Farmacroce" onclick="event.preventDefault(); window.location='fb://profile/61560597388942'; setTimeout(function(){window.location='https://www.facebook.com/people/Farmacroce-Rossi/61560597388942/';},500);">
