@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<title>Lista Nascita Lorenzo - Farmacroce</title>
+<style>
+    :root{
+      --accent:#3b82f6; /* blu */
+      --muted:#6b7280;
+      --card-bg:#ffffff;
+      --page-bg:#f6f7fb;
+      --success:#16a34a;
+    }
+    html,body{height:100%;}
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: var(--page-bg);
+      margin:0; padding:24px; color:#111827;
+    }
+    .site-header{max-width:1100px;margin:0 auto 18px;padding:12px 6px;text-align:center}
+    .logo{max-width:180px;display:inline-block}
+    .header-top{display:flex;align-items:center;justify-content:center;gap:12px}
+    .social a{color:var(--muted);text-decoration:none}
+    .social svg{width:28px;height:28px;vertical-align:middle}
+    h1{color:var(--accent);margin:6px 0 4px;font-weight:700}
+    p.lead{color:var(--muted);margin-top:0}
+    .container{max-width:1100px;margin:0 auto;display:block}
+    .main{display:flex;gap:32px;align-items:flex-start}
+    .products-grid{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:start;justify-items:stretch}
+    .products-grid > .product{width:100%}
+    .product{background:var(--card-bg);border-radius:10px;padding:16px;border:1px solid #e6e9ef;box-shadow:0 2px 6px rgba(16,24,40,0.03);display:flex;flex-direction:column;justify-content:space-between;height:420px;overflow:hidden}
+    .product img{width:100%;height:150px;object-fit:contain;border-radius:6px;margin-bottom:10px}
+    .product h3{margin:6px 0}
+    .product .desc{min-height:48px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;line-height:1.2rem;max-height:3.6rem;transition:max-height .18s ease}
+    .product .desc.expanded{display:block;overflow:visible;max-height:9999px;-webkit-line-clamp:unset}
+    .product:has(.desc.expanded){max-height:none;overflow:visible;height:auto}
+    .more-btn{background:none;border:none;color:var(--accent);cursor:pointer;padding:6px 0;font-weight:600}
+    .product .meta{margin-top:4px}
+    .product .add-btn{margin-top:auto}
+    @media (max-width: 768px) {
+      .products-grid{grid-template-columns:repeat(2,1fr)}
+      .product img{height:140px}
+    }
+    @media (max-width: 480px) {
+      body{padding:12px}
+      .site-header{padding:8px 6px;text-align:left}
+      .logo{max-width:140px}
+      .header-top{justify-content:space-between;align-items:center;gap:8px}
+      .social svg{width:32px;height:32px}
+      .products-grid{gap:12px;grid-template-columns:1fr;grid-auto-rows:auto}
+      .product{max-height:none!important;overflow:visible!important;height:auto!important;min-height:auto!important}
+      .product img, .product-img, img.product-img{
+        height:200px!important;
+        min-height:200px!important;
+        width:100%!important;
+        display:block!important;
+        object-fit:contain!important;
+        visibility:visible!important;
+        opacity:1!important;
+        margin-bottom:10px!important;
+      }
+      .product h3{font-size:1rem}
+      .product .desc{-webkit-line-clamp:4}
+      .product .add-btn{padding:12px;font-size:1rem;border-radius:8px}
+      .cart{width:100%;margin-top:12px}
+      #cart .cart-item .left strong{font-size:0.95rem}
+    }
+    .product h3{margin:0 0 6px;font-size:1.05rem}
+    .product p{margin:4px 0;color:var(--muted)}
+    .stock{font-size:0.95rem}
+    .product .add-btn{width:100%;display:inline-block;padding:10px;border-radius:8px;background:var(--accent);color:#fff;border:none;cursor:pointer;font-weight:600}
+    .product .add-btn[disabled]{opacity:0.7}
+    .product .desc{color:#374151;margin:8px 0 6px;font-size:0.95rem}
+    .product .meta{display:block;color:#6b7280;font-size:0.85rem}
+    .product .price{font-weight:600;color:#111827;font-size:1.1rem;margin:8px 0}
+  </style>
+</head>
+<body>
+  <div class="site-header">
+    <div class="header-top">
+      <img class="logo" src="Logo.jpg" alt="Logo Farmacroce">
+      <div class="social" aria-hidden="false">
+        <a href="fb://profile/61560597388942" target="_blank" rel="noopener" aria-label="Pagina Facebook Farmacroce" onclick="event.preventDefault(); window.location='fb://profile/61560597388942'; setTimeout(function(){window.location='https://www.facebook.com/people/Farmacroce-Rossi/61560597388942/';},500);">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" style="fill:#1877F2">
+            <path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8.5v-3h2v-2.3c0-2 1.2-3.1 3-3.1.9 0 1.8.1 1.8.1v2h-1c-1 0-1.3.6-1.3 1.2V12h2.2l-.4 3h-1.8v7A10 10 0 0 0 22 12z"/>
+          </svg>
+        </a>
+        <a href="instagram://user?username=Farmacroce" target="_blank" rel="noopener" aria-label="Pagina Instagram Farmacroce" onclick="event.preventDefault(); window.location='instagram://user?username=Farmacroce'; setTimeout(function(){window.location='https://www.instagram.com/Farmacroce';},500);">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img">
+            <defs>
+              <linearGradient id="instaGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#f58529"/>
+                <stop offset="50%" stop-color="#dd2a7b"/>
+                <stop offset="100%" stop-color="#8134af"/>
+              </linearGradient>
+            </defs>
+            <path fill="url(#instaGrad)" d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 6.2A4.8 4.8 0 1 0 16.8 13 4.8 4.8 0 0 0 12 8.2zm6.4-2.6a1.1 1.1 0 1 0 1.1 1.1 1.1 1.1 0 0 0-1.1-1.1zM12 10.6A1.4 1.4 0 1 1 10.6 12 1.4 1.4 0 0 1 12 10.6z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <h1>💙 Lista Nascita Lorenzo 💙</h1>
+    <p class="lead">Benvenuti nella Lista Nascita Lorenzo presso la Parafarmacia Farmacroce!</p>
+  </div>
+  <div class="container">
+    <div class="main">
+      <div id="products" class="products-grid">
+        <!-- Inserisci qui i prodotti per la lista Lorenzo -->
+        <div class="product" data-product="Set Prima Infanzia" data-price="40.00" data-stock="1">
+          <img class="product-img" src="set-prima-infanzia.jpg" alt="Set Prima Infanzia" style="cursor: zoom-in;">
+          <h3>Set Prima Infanzia</h3>
+          <p class="desc">Set completo per la cura del neonato: biberon, ciuccio, spazzola, forbicine e detergente delicato.</p>
+          <p class="price">Prezzo: €40.00</p>
+          <small class="meta">Marca: Chicco</small>
+          <p class="stock">Disponibili: 1</p>
+          <button class="add-btn" onclick="alert('Funzionalità carrello non attiva su questa demo!')">Aggiungi al carrello</button>
+        </div>
+        <div class="product" data-product="Copertina azzurra" data-price="25.00" data-stock="1">
+          <img class="product-img" src="copertina-azzurra.jpg" alt="Copertina azzurra" style="cursor: zoom-in;">
+          <h3>Copertina azzurra</h3>
+          <p class="desc">Copertina in cotone azzurro, ideale per la culla o il passeggino.</p>
+          <p class="price">Prezzo: €25.00</p>
+          <small class="meta">Marca: Prenatal</small>
+          <p class="stock">Disponibili: 1</p>
+          <button class="add-btn" onclick="alert('Funzionalità carrello non attiva su questa demo!')">Aggiungi al carrello</button>
+        </div>
+        <div class="product" data-product="Giostrina musicale blu" data-price="30.00" data-stock="1">
+          <img class="product-img" src="giostrina-blu.jpg" alt="Giostrina musicale blu" style="cursor: zoom-in;">
+          <h3>Giostrina musicale blu</h3>
+          <p class="desc">Giostrina musicale con pendenti a forma di stellina e luna, melodia rilassante per la nanna.</p>
+          <p class="price">Prezzo: €30.00</p>
+          <small class="meta">Marca: Chicco</small>
+          <p class="stock">Disponibili: 1</p>
+          <button class="add-btn" onclick="alert('Funzionalità carrello non attiva su questa demo!')">Aggiungi al carrello</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
