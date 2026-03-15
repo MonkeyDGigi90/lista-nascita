@@ -25,3 +25,6 @@ npm-debug.log*
 .env.local
 .env.*.local
 .vercel
+
+# File delle credenziali
+backend/lista-nascita-bc16a-firebase-adminsdk-fbsvc-0fcc29cb10.json
