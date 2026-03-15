@@ -11,6 +11,7 @@ admin.initializeApp({
 const db = admin.firestore();
 
 const products = [
+  // --- LUNA ---
   { product_name: 'Zaino Mustela', price: 45.00, stock: 1, sku: 'MU-001', brand: 'Mustela', description: 'Contenuto: Fluido detergente senza risciaquo 300ml, Detergente delicato 200ml, Hydra bébè crema viso 40 ml, Pasta cambio 50ml.', image: 'Zaino-Mustela.jpg' },
   { product_name: 'Organizer passeggino', price: 25.00, stock: 1, sku: 'MU-002', brand: 'Mustela', description: 'Pratico organizer da agganciare al passeggino con tasche multiple per biberon, pannolini e accessori.', image: 'Organizer-passeggino.jpg' },
   { product_name: 'Scatola in latta Mustela', price: 15.00, stock: 1, sku: 'MU-003', brand: 'Mustela', description: 'Scatola in latta con design elegante, perfetta per confezionare piccoli regali.', image: 'Scatola-in-latta.jpg' },
@@ -34,7 +35,35 @@ const products = [
   { product_name: 'Gel gengivale Chicco + massaggia gengive da dito', price: 13.00, stock: 1, sku: 'CH-012', brand: 'Chicco', description: 'Set per l\'igiene orale dei bambini indicato dai 4m+.', image: 'set-gengive.jpg' },
   { product_name: 'Dentinale', price: 13.00, stock: 1, sku: 'CH-013', brand: 'Prodotto farmaceutico', description: 'DENTINALE pasta gengivale per il trattamento dei dolori alle gengive.', image: 'dentinale.jpg' },
   { product_name: 'Seggiolino auto Chicco Quizy', price: 95.00, stock: 0, sku: 'CH-014', brand: 'Chicco', description: 'Rialzo auto con schienale ultra-leggero.', image: 'Seggiolino-Chicco.jpg' },
-  { product_name: 'Seggiolino auto Chicco Fold & Go', price: 170.00, stock: 1, sku: 'CH-015', brand: 'Chicco', description: 'Seggiolino auto chicco che accompagnerà il tuo bambino.', image: 'Seggiolino-Chicco2.png' }
+  { product_name: 'Seggiolino auto Chicco Fold & Go', price: 170.00, stock: 1, sku: 'CH-015', brand: 'Chicco', description: 'Seggiolino auto chicco che accompagnerà il tuo bambino.', image: 'Seggiolino-Chicco2.png' },
+
+  // --- LORENZO ---
+  { product_name: 'BOPPY CUSCINO ALLATTAMENTO DELUXE HELLO BABY', price: 49.90, stock: 1, brand: '', description: '', image: 'Lorenzo/BOPPY CUSCINO ALLATTAMENTO DELUXE HELLO BABY prezzo 49.90.jpg' },
+  { product_name: 'chicco baby manicure set', price: 10.99, stock: 1, brand: '', description: '', image: 'Lorenzo/chicco baby manicure set prezzo 10.99.jpg' },
+  { product_name: 'Chicco EasyFit Marsupio Ergonomico', price: 59.00, stock: 1, brand: '', description: '', image: 'Lorenzo/Chicco EasyFit Marsupio Ergonomico prezzo 59.jpg' },
+  { product_name: 'Chicco gioco baby orsetto azzurro', price: 39.90, stock: 1, brand: '', description: '', image: 'Lorenzo/Chicco gioco baby orsetto azzurro prezzo 39.90.jpg' },
+  { product_name: 'Chicco gioco giostra CONIGL-ORSO', price: 34.90, stock: 1, brand: '', description: '', image: 'Lorenzo/Chicco gioco giostra CONIGL-ORSO prezzo 34.90.jpg' },
+  { product_name: 'Chicco Indicatore Temperatura bagno', price: 9.99, stock: 1, brand: '', description: '', image: 'Lorenzo/Chicco Indicatore Temperatura bagno prezzo 9.99.jpg' },
+  { product_name: 'Chicco My Sweet doudou', price: 21.90, stock: 1, brand: '', description: '', image: 'Lorenzo/Chicco My Sweet doudou prezzo 21.90.jpg' },
+  { product_name: 'Chicco natural feeling', price: 11.99, stock: 1, brand: '', description: '', image: 'Lorenzo/Chicco natural feeling prezzo 11.99.jpg' },
+  { product_name: 'Chicco Palestrina Attività 0Mesi+ 3 in 1 Morbida', price: 34.90, stock: 1, brand: '', description: '', image: 'Lorenzo/Chicco Palestrina Attività 0Mesi+ 3 in 1 Morbida prezzo 34.90.jpg' },
+  { product_name: 'Chicco pettinino crosta lattea', price: 6.99, stock: 1, brand: '', description: '', image: 'Lorenzo/Chicco pettinino crosta lattea prezzo 6.99.jpg' },
+  { product_name: 'Chicco scaldabiberon casa-auto', price: 49.90, stock: 1, brand: '', description: '', image: 'Lorenzo/Chicco scaldabiberon casa-auto prezzo 49.90.jpg' },
+  { product_name: 'Chicco Thermos Portapappa 6Mesi+', price: 28.00, stock: 1, brand: '', description: '', image: 'Lorenzo/Chicco Thermos Portapappa 6Mesi+prezzo28.jpg' },
+  { product_name: 'Clementoni BABY MICKEY PRIME', price: 21.90, stock: 1, brand: '', description: '', image: 'Lorenzo/Clementoni BABY MICKEY PRIME prezzo 21.90.jpg' },
+  { product_name: 'Mam comfort 3-12', price: 14.99, stock: 1, brand: '', description: '', image: 'Lorenzo/Mam comfort 3-12 prezzo 14.99.jpg' },
+  { product_name: 'Mam Dentaruolo cooler', price: null, stock: 1, brand: '', description: '', image: 'Lorenzo/Mam Dentaruolo cooler.jpg' },
+  { product_name: 'Mam sterilizzatore elettrico e scaldabiberon 6 in 1', price: 126.50, stock: 1, brand: '', description: '', image: 'Lorenzo/Mam sterilizzatore elettrico e scaldabiberon 6 in 1 prezzo126.50 .jpg' },
+  { product_name: 'Mustela Cofanetto Koala', price: 23.90, stock: 1, brand: '', description: '', image: 'Lorenzo/Mustela Cofanetto Koala prezzo 23.90.jpg' },
+  { product_name: 'Mustela Mustì Cofanetto Regalo Acqua Profumata 50ml + Orsetto', price: 22.90, stock: 1, brand: '', description: '', image: 'Lorenzo/Mustela Mustì Cofanetto Regalo Acqua Profumata 50ml + Orsetto prezzo 22.90.jpg' },
+  { product_name: 'Mustela organizer passeggino', price: 30.70, stock: 1, brand: '', description: '', image: 'Lorenzo/Mustela organizer passeggino prezzo 30.70.jpg' },
+  { product_name: 'MUSTELA VANITY SET', price: 26.90, stock: 1, brand: '', description: '', image: 'Lorenzo/MUSTELA VANITY SET 26.90.jpg' },
+  { product_name: 'Mustela zaino prime coccole', price: 44.50, stock: 1, brand: '', description: '', image: 'Lorenzo/Mustela zaino prime coccole prezzo 44.50.jpg' },
+  { product_name: 'Narhinel Aspiratore Nasale per Neonato e Bambini', price: 9.40, stock: 1, brand: '', description: '', image: 'Lorenzo/Narhinel Aspiratore Nasale per Neonato e Bambini prezzo 9.40.jpg' },
+  { product_name: 'Pampers Baby Dry Pannolini Taglia 2 Mini', price: 6.99, stock: 1, brand: '', description: '', image: 'Lorenzo/Pampers Baby Dry Pannolini Taglia 2 Mini prezzo 6.99.jpeg' },
+  { product_name: 'Pampers Progressi 1', price: 8.99, stock: 1, brand: '', description: '', image: 'Lorenzo/Pampers Progressi 1 prezzo 8.99.jpg' },
+  { product_name: 'Portabebè ComfyFit Boppy grigioprezzo', price: 79.99, stock: 1, brand: '', description: '', image: 'Lorenzo/Portabebè ComfyFit Boppy grigioprezzo 79.99.jpg' },
+  { product_name: 'TIRALATTE ELETTRICO LORELLI DAILY COMFORT TOUCHSCR', price: 89.90, stock: 1, brand: '', description: '', image: 'Lorenzo/TIRALATTE ELETTRICO LORELLI DAILY COMFORT TOUCHSCR prezzo 89.90.jpg' },
 ];
 
 async function uploadProducts() {

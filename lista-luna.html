@@ -756,12 +756,23 @@
               const productName = item.name;
               const quantity = parseInt(item.quantity) || 1;
               console.log('Updating product:', productName, 'quantity:', quantity);
-              
               try {
-                await updateDoc(doc(window.db, "products", productName), {
-                  stock: 0  // Imposta stock a 0 (regalato)
+                // Recupera lo stock attuale da Firestore
+                const productRef = doc(window.db, "products", productName);
+                const productSnap = await window.firebaseModules.getDocs(window.firebaseModules.collection(window.db, "products"));
+                let currentStock = null;
+                productSnap.forEach(docSnap => {
+                  const data = docSnap.data();
+                  if (data.product_name === productName) {
+                    currentStock = data.stock;
+                  }
                 });
-                console.log(`Stock aggiornato su Firestore per: ${productName}`);
+                let newStock = (typeof currentStock === 'number' ? currentStock : 1) - quantity;
+                if (newStock < 0) newStock = 0;
+                await updateDoc(productRef, {
+                  stock: newStock
+                });
+                console.log(`Stock aggiornato su Firestore per: ${productName} -> ${newStock}`);
               } catch (error) {
                 console.error(`Errore aggiornamento stock per ${productName}:`, error);
               }
@@ -770,9 +781,10 @@
             // Aggiorna localmente
             purchasedItems.forEach(item => {
               const productName = item.name;
+              const quantity = parseInt(item.quantity) || 1;
               const p = products[productName];
               if (p) {
-                p.stock = 0;
+                p.stock = Math.max(0, p.stock - quantity);
                 updateStockDisplay(productName);
               }
             });
