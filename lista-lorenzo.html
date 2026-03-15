@@ -11,7 +11,7 @@
       --accent:#3b82f6; /* blu */
       --muted:#6b7280;
       --card-bg:#ffffff;
-      --page-bg:#f6f7fb;
+      --page-bg:#7fdbda; /* verde acqua */
       --success:#16a34a;
     }
     html,body{height:100%;}
@@ -34,8 +34,25 @@
     .product{background:var(--card-bg);border-radius:10px;padding:16px;border:1px solid #e6e9ef;box-shadow:0 2px 6px rgba(16,24,40,0.03);display:flex;flex-direction:column;justify-content:space-between;height:420px;overflow:hidden}
     .product img{width:100%;height:150px;object-fit:contain;border-radius:6px;margin-bottom:10px}
     .product h3{margin:6px 0}
-    .product .desc{min-height:48px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;line-height:1.2rem;max-height:3.6rem;transition:max-height .18s ease}
-    .product .desc.expanded{display:block;overflow:visible;max-height:9999px;-webkit-line-clamp:unset}
+    .product .desc{
+      min-height:48px;
+      display:-webkit-box;
+      -webkit-line-clamp:3;
+      line-clamp:3;
+      -webkit-box-orient:vertical;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      line-height:1.2rem;
+      max-height:3.6rem;
+      transition:max-height .18s ease
+    }
+    .product .desc.expanded{
+      display:block;
+      overflow:visible;
+      max-height:9999px;
+      -webkit-line-clamp:unset;
+      line-clamp:unset;
+    }
     .product:has(.desc.expanded){max-height:none;overflow:visible;height:auto}
     .more-btn{background:none;border:none;color:var(--accent);cursor:pointer;padding:6px 0;font-weight:600}
     .product .meta{margin-top:4px}
@@ -94,7 +111,10 @@
         margin-bottom:10px!important;
       }
       .product h3{font-size:1.08rem;line-height:1.2}
-      .product .desc{-webkit-line-clamp:4}
+      .product .desc{
+        -webkit-line-clamp:4;
+        line-clamp:4;
+      }
       .product .add-btn{padding:12px;font-size:1.04rem;border-radius:8px}
       .cart{width:100%;margin-top:12px}
       #cart .cart-item .left strong{font-size:1.01rem}
@@ -142,6 +162,10 @@
     <p class="lead">Benvenuti nella Lista Nascita Lorenzo presso la Parafarmacia Farmacroce!</p>
   </div>
   <div class="container">
+    <!-- Immagine Re Leone Disney in alto -->
+    <div style="text-align:center;margin-bottom:18px;">
+      <img src="https://lumiere-a.akamaihd.net/v1/images/the-lion-king-2019-key-art-1_1b1e6e7a.jpeg?region=0,0,540,810&width=320" alt="Il Re Leone Disney" style="max-width:180px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.12);">
+    </div>
     <div class="main">
       <div id="products" class="products-grid">
         <div class="product" data-product="Boppy Cuscino Allattamento Deluxe hello baby" data-price="49.90" data-stock="1">
@@ -352,6 +376,10 @@
           <p class="stock">Disponibili: 1</p>
           <button class="add-btn" onclick="addToCart('TIRALATTE ELETTRICO LORELLI DAILY COMFORT TOUCHSCR', 89.90)">Aggiungi al carrello</button>
         </div>
+      </div>
+      <!-- Immagine Re Leone Disney in fondo -->
+      <div style="text-align:center;margin-top:24px;">
+        <img src="https://static.wikia.nocookie.net/disney/images/7/7b/Simba_Adult.png/revision/latest?cb=20190312001234&path-prefix=it" alt="Simba Re Leone" style="max-width:140px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.10);">
       </div>
       <aside class="cart">
         <div style="background:#fff3cd;color:#856404;border:1px solid #ffeeba;padding:10px 14px;border-radius:8px;margin-bottom:14px;font-size:1.01rem;">
