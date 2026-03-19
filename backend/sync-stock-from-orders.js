@@ -7,15 +7,28 @@ async function syncStockFromOrders() {
   // Recupera tutti gli ordini
   const ordersSnap = await db.collection('orders').get();
   const productQuantities = {};
+  const debugOrders = [];
 
   ordersSnap.forEach(doc => {
     const order = doc.data();
+    debugOrders.push({ id: doc.id, items: order.items });
     if (order.items && Array.isArray(order.items)) {
       order.items.forEach(item => {
         const name = item.name;
         const qty = parseInt(item.quantity) || 1;
         productQuantities[name] = (productQuantities[name] || 0) + qty;
       });
+    }
+  });
+
+  // Log di debug: elenco ordini e prodotti
+  console.log('ORDINI TROVATI SU FIRESTORE:');
+  debugOrders.forEach(o => {
+    console.log(`Ordine ${o.id}:`);
+    if (o.items && Array.isArray(o.items)) {
+      o.items.forEach(i => console.log(`  - ${i.name} x${i.quantity}`));
+    } else {
+      console.log('  Nessun prodotto');
     }
   });
 
