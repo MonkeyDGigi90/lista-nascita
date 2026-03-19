@@ -570,6 +570,17 @@
       const div = p.element;
       const stockSpan = div.querySelector('.stock');
       const btn = div.querySelector('button.add-btn');
+      if (typeof p.stock !== 'number') {
+        // Stock non ancora sincronizzato: non mostrare nulla
+        stockSpan.textContent = '';
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = '...';
+          btn.style.background = '#ccc';
+          btn.style.cursor = 'default';
+        }
+        return;
+      }
       if (p.stock <= 0) {
         stockSpan.textContent = 'Regalato';
         if (btn) {
