@@ -4,6 +4,10 @@ admin.initializeApp({credential: admin.credential.cert(serviceAccount)});
 const db = admin.firestore();
 
 async function syncStockFromOrders() {
+    // Lista prodotti Luna
+    const luna = [
+      "Zaino Mustela","Organizer passeggino","Scatola in latta Mustela","Set Mustela crema solare con borsa frigo","Bagno corpo Mustela da 150 ml","Mustela acqua detergente 300ml","Stick Mustela labbra","Crema solare 50+","Repellente zanzare","Dissuasore zanzare portatile","Zanzariera Chicco per passeggino","Fascia porta bimbo Chicco","Giostrina Next to Dreams Chicco","Giraffa Chicco","Set igiene panda","Set spazzola e pettine Chicco","Carillon Chicco a forma di luna","Massaggia gengive Chicco refrigerante","Set dentifricio spazzolino Chicco","Gel gengivale Chicco + massaggia gengive da dito","Dentinale","Seggiolino auto Chicco Quizy","Seggiolino auto Chicco Fold & Go"
+    ];
   // Recupera tutti gli ordini
   const ordersSnap = await db.collection('orders').get();
   const productQuantities = {};
@@ -16,7 +20,9 @@ async function syncStockFromOrders() {
       order.items.forEach(item => {
         const name = item.name;
         const qty = parseInt(item.quantity) || 1;
-        productQuantities[name] = (productQuantities[name] || 0) + qty;
+        if (luna.includes(name)) {
+          productQuantities[name] = (productQuantities[name] || 0) + qty;
+        }
       });
     }
   });
@@ -38,6 +44,7 @@ async function syncStockFromOrders() {
   productsSnap.forEach(doc => {
     const product = doc.data();
     const name = product.product_name;
+    if (!luna.includes(name)) return;
     const purchased = productQuantities[name] || 0;
     let newStock = product.stock;
     if (purchased > 0) {
