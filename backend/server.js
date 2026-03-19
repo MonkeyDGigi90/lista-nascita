@@ -53,6 +53,7 @@ app.post('/api/paypal-webhook', (req, res) => {
     }
 
     // Aggiorna lo stock per ogni articolo nell'ordine
+    const { updateFirestoreStock } = require('./firestore-sync');
     items.forEach((item) => {
       const productName = item.name;
       const quantity = parseInt(item.quantity) || 1;
@@ -64,6 +65,12 @@ app.post('/api/paypal-webhook', (req, res) => {
           if (err) {
             console.error(`Errore aggiornamento stock per ${productName}:`, err.message);
           } else {
+            // Recupera lo stock aggiornato dal DB e aggiorna Firestore
+            db.get('SELECT stock FROM products WHERE product_name = ?', [productName], (err2, row) => {
+              if (!err2 && row) {
+                updateFirestoreStock(productName, row.stock);
+              }
+            });
             console.log(`Stock aggiornato per: ${productName} (-${quantity})`);
           }
         }
