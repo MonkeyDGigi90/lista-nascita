@@ -464,32 +464,32 @@
     function initProducts() {
       const productDivs = document.querySelectorAll('#products .product');
       productDivs.forEach(div => {
-        const name = div.getAttribute('data-product');
-        const price = parseFloat(div.getAttribute('data-price')) || 0;
-        const stock = parseInt(div.getAttribute('data-stock'), 10) || 0;
-        products[name] = { price, stock, element: div };
-        updateStockDisplay(name);
-        const img = div.querySelector('.product-img') || div.querySelector('img');
-        if (img) {
-          img.style.cursor = 'zoom-in';
-          img.addEventListener('click', function() {
-            openLightbox(this.src, this.alt || name);
-          });
-        }
-        const desc = div.querySelector('.desc');
-        if (desc) {
-          const text = desc.textContent || '';
-          if (text.length > 120) {
-            const btn = document.createElement('button');
-            btn.className = 'more-btn';
-            btn.type = 'button';
-            btn.textContent = 'Mostra altro';
-            btn.addEventListener('click', function() { toggleDesc(this); });
-            if (desc.nextSibling) desc.parentNode.insertBefore(btn, desc.nextSibling);
-            else desc.parentNode.appendChild(btn);
+          const name = div.getAttribute('data-product');
+          const price = parseFloat(div.getAttribute('data-price')) || 0;
+          // NON impostare lo stock iniziale da HTML, lasciamo undefined
+          products[name] = { price, stock: undefined, element: div };
+          // NON chiamare updateStockDisplay qui, lo stock sarà aggiornato solo dopo sync da Firestore
+          const img = div.querySelector('.product-img') || div.querySelector('img');
+          if (img) {
+            img.style.cursor = 'zoom-in';
+            img.addEventListener('click', function() {
+              openLightbox(this.src, this.alt || name);
+            });
           }
-        }
-      });
+          const desc = div.querySelector('.desc');
+          if (desc) {
+            const text = desc.textContent || '';
+            if (text.length > 120) {
+              const btn = document.createElement('button');
+              btn.className = 'more-btn';
+              btn.type = 'button';
+              btn.textContent = 'Mostra altro';
+              btn.addEventListener('click', function() { toggleDesc(this); });
+              if (desc.nextSibling) desc.parentNode.insertBefore(btn, desc.nextSibling);
+              else desc.parentNode.appendChild(btn);
+            }
+          }
+        });
     }
 
     // Inizializzazione sequenziale: prodotti, stock, carrello
@@ -539,6 +539,17 @@
       const div = p.element;
       const stockSpan = div.querySelector('.stock');
       const btn = div.querySelector('button.add-btn');
+      // Mostra solo lo stato reale da Firestore
+      if (typeof p.stock !== 'number') {
+        stockSpan.textContent = '...';
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = '...';
+          btn.style.background = '#999';
+          btn.style.cursor = 'default';
+        }
+        return;
+      }
       if (p.stock <= 0) {
         stockSpan.textContent = 'Regalato';
         if (btn) {
