@@ -439,17 +439,25 @@
       try {
         const { getDocs, collection } = window.firebaseModules;
         const querySnapshot = await getDocs(collection(window.db, "products"));
+        const firestoreProducts = [];
         querySnapshot.forEach(docSnapshot => {
           const product = docSnapshot.data();
           const productName = product.product_name;
+          firestoreProducts.push({ name: productName, stock: product.stock });
           if (products[productName]) {
             products[productName].stock = product.stock || 0;
-            console.log(`Stock sincronizzato per ${productName}: ${product.stock}`);
+            console.log(`[SYNC] Stock sincronizzato per ${productName}: ${product.stock}`);
+          } else {
+            console.warn(`[SYNC] Prodotto Firestore non trovato in HTML: ${productName}`);
           }
         });
+        // Log di debug: elenco prodotti HTML
+        console.log('[DEBUG] Prodotti HTML:', Object.keys(products));
+        // Log di debug: elenco prodotti Firestore
+        console.log('[DEBUG] Prodotti Firestore:', firestoreProducts);
         Object.keys(products).forEach(name => updateStockDisplay(name));
       } catch (error) {
-        console.error('Errore sincronizzazione stock:', error);
+        console.error('[SYNC] Errore sincronizzazione stock:', error);
       }
     }
 
