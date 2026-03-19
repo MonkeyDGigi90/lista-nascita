@@ -8,13 +8,23 @@ async function sync(){
   const batch=db.batch();
   const all=[...luna,...lorenzo];
   const snap=await db.collection('products').get();
-  snap.forEach(doc=>{if(!all.includes(doc.id)){batch.delete(doc.ref);}});
+  const existing = {};
+  snap.forEach(doc=>{
+    existing[doc.id] = doc.data();
+    if(!all.includes(doc.id)){batch.delete(doc.ref);}
+  });
   for(const name of all){
     const ref=db.collection('products').doc(name);
-    batch.set(ref,{product_name:name,stock:1});
+    if(existing[name]){
+      // Prodotto già esistente: mantieni lo stock attuale
+      batch.set(ref,{product_name:name,stock:existing[name].stock || 1}, {merge:true});
+    }else{
+      // Prodotto nuovo: crea con stock 1
+      batch.set(ref,{product_name:name,stock:1});
+    }
   }
   await batch.commit();
-  console.log('Sincronizzazione completata');
+  console.log('Sincronizzazione completata (stock preservato)');
   process.exit(0);
 }
 sync();
