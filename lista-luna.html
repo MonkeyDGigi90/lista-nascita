@@ -498,8 +498,7 @@
       productDivs.forEach(div => {
         const name = div.getAttribute('data-product');
         const price = parseFloat(div.getAttribute('data-price')) || 0;
-        // NON inizializzare lo stock da data-stock
-        products[name] = { price, element: div };
+        products[name] = { price, stock: undefined, element: div };
         // updateStockDisplay(name); // Non chiamare qui, lo stock sarà aggiornato da Firestore
         // attacca evento click per lightbox sull'immagine del prodotto
         const img = div.querySelector('.product-img') || div.querySelector('img');
