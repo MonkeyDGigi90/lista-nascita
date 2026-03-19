@@ -34,11 +34,14 @@
     .product{background:var(--card-bg);border-radius:10px;padding:16px;border:1px solid #e6e9ef;box-shadow:0 2px 6px rgba(16,24,40,0.03);display:flex;flex-direction:column;justify-content:space-between;height:420px;overflow:hidden}
     .product img{
       width:100%;
-      height:150px;
+      height:200px;
+      max-height:220px;
+      min-height:160px;
       object-fit:contain;
       border-radius:6px;
       margin-bottom:10px;
       display:block;
+      background:#fff;
     }
     .product h3{margin:6px 0}
     .product .desc{
@@ -169,15 +172,31 @@
     <div style="width:100%;display:flex;justify-content:center;align-items:center;margin-bottom:24px;">
       <img src="img/lion-king-pictures-9gcc5scxr3pdnsss.jpg" alt="Simba Re Leone" style="max-width:180px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.12);">
     </div>
-          <button class="add-btn" onclick="addToCart('Chicco gioco baby orsetto azzurro', 39.90)">Aggiungi al carrello</button>
-        </div>
-        <div class="product" data-product="Boppy Cuscino Allattamento Deluxe hello baby" data-price="49.90" data-stock="1">
-          <img class="product-img" src="Lorenzo/BOPPY CUSCINO ALLATTAMENTO DELUXE HELLO BABY prezzo 49.90.jpg" alt="BOPPY CUSCINO ALLATTAMENTO DELUXE HELLO BABY">
-          <h3>BOPPY CUSCINO ALLATTAMENTO DELUXE HELLO BABY</h3>
-          <p class="desc">Cuscino ergonomico per allattamento, rivestimento morbido e lavabile.</p>
-          <p class="price">Prezzo: €49.90</p>
-          <p class="stock">Disponibili: 1</p>
-          <button class="add-btn" onclick="addToCart('BOPPY CUSCINO ALLATTAMENTO DELUXE HELLO BABY', 49.90)">Aggiungi al carrello</button>
+    <div id="products" class="products-grid">
+      <div class="product" data-product="Boppy Cuscino Allattamento Deluxe hello baby" data-price="49.90" data-stock="1">
+        <img class="product-img" src="Lorenzo/BOPPY CUSCINO ALLATTAMENTO DELUXE HELLO BABY prezzo 49.90.jpg" alt="BOPPY CUSCINO ALLATTAMENTO DELUXE HELLO BABY">
+        <h3>BOPPY CUSCINO ALLATTAMENTO DELUXE HELLO BABY</h3>
+        <p class="desc">Cuscino ergonomico per allattamento, rivestimento morbido e lavabile.</p>
+        <p class="price">Prezzo: €49.90</p>
+        <p class="stock">Disponibili: 1</p>
+        <button class="add-btn" onclick="addToCart('BOPPY CUSCINO ALLATTAMENTO DELUXE HELLO BABY', 49.90)">Aggiungi al carrello</button>
+      </div>
+      <div class="product" data-product="chicco baby manicure set" data-price="10.99" data-stock="1">
+        <img class="product-img" src="Lorenzo/chicco baby manicure set prezzo 10.99.jpg" alt="chicco baby manicure set">
+        <h3>chicco baby manicure set</h3>
+        <p class="desc">Set manicure per neonati: forbicine, limetta e tagliaunghie.</p>
+        <p class="price">Prezzo: €10.99</p>
+        <p class="stock">Disponibili: 1</p>
+        <button class="add-btn" onclick="addToCart('chicco baby manicure set', 10.99)">Aggiungi al carrello</button>
+      </div>
+      <div class="product" data-product="Chicco EasyFit Marsupio Ergonomico" data-price="59" data-stock="1">
+        <img class="product-img" src="Lorenzo/Chicco EasyFit Marsupio Ergonomico prezzo 59.jpg" alt="Chicco EasyFit Marsupio Ergonomico">
+        <h3>Chicco EasyFit Marsupio Ergonomico</h3>
+        <p class="desc">Marsupio ergonomico, facile da indossare, supporto per schiena e spalle.</p>
+        <p class="price">Prezzo: €59.00</p>
+        <p class="stock">Disponibili: 1</p>
+        <button class="add-btn" onclick="addToCart('Chicco EasyFit Marsupio Ergonomico', 59)">Aggiungi al carrello</button>
+      </div>
         </div>
         <div class="product" data-product="chicco baby manicure set" data-price="10.99" data-stock="1">
           <img class="product-img" src="Lorenzo/chicco baby manicure set prezzo 10.99.jpg" alt="chicco baby manicure set">
