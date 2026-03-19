@@ -498,11 +498,9 @@
       productDivs.forEach(div => {
         const name = div.getAttribute('data-product');
         const price = parseFloat(div.getAttribute('data-price')) || 0;
-        const stock = parseInt(div.getAttribute('data-stock'), 10) || 0;
-        
-        products[name] = { price, stock, element: div };
-        updateStockDisplay(name);
-        
+        // NON inizializzare lo stock da data-stock
+        products[name] = { price, element: div };
+        // updateStockDisplay(name); // Non chiamare qui, lo stock sarà aggiornato da Firestore
         // attacca evento click per lightbox sull'immagine del prodotto
         const img = div.querySelector('.product-img') || div.querySelector('img');
         if (img) {
@@ -511,7 +509,6 @@
             openLightbox(this.src, this.alt || name);
           });
         }
-
         // aggiungi pulsante "Mostra altro" se la descrizione è lunga
         const desc = div.querySelector('.desc');
         if (desc) {
