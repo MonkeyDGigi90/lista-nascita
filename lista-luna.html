@@ -498,9 +498,9 @@
       productDivs.forEach(div => {
         const name = div.getAttribute('data-product');
         const price = parseFloat(div.getAttribute('data-price')) || 0;
+        // NON impostare lo stock iniziale da HTML, lasciamo undefined
         products[name] = { price, stock: undefined, element: div };
-        // updateStockDisplay(name); // Non chiamare qui, lo stock sarà aggiornato da Firestore
-        // attacca evento click per lightbox sull'immagine del prodotto
+        // NON chiamare updateStockDisplay qui, lo stock sarà aggiornato solo dopo sync da Firestore
         const img = div.querySelector('.product-img') || div.querySelector('img');
         if (img) {
           img.style.cursor = 'zoom-in';
@@ -508,7 +508,6 @@
             openLightbox(this.src, this.alt || name);
           });
         }
-        // aggiungi pulsante "Mostra altro" se la descrizione è lunga
         const desc = div.querySelector('.desc');
         if (desc) {
           const text = desc.textContent || '';
@@ -518,7 +517,6 @@
             btn.type = 'button';
             btn.textContent = 'Mostra altro';
             btn.addEventListener('click', function() { toggleDesc(this); });
-            // inserisci il bottone subito dopo la descrizione
             if (desc.nextSibling) desc.parentNode.insertBefore(btn, desc.nextSibling);
             else desc.parentNode.appendChild(btn);
           }
@@ -570,13 +568,13 @@
       const div = p.element;
       const stockSpan = div.querySelector('.stock');
       const btn = div.querySelector('button.add-btn');
+      // Mostra solo lo stato reale da Firestore
       if (typeof p.stock !== 'number') {
-        // Stock non ancora sincronizzato: non mostrare nulla
-        stockSpan.textContent = '';
+        stockSpan.textContent = '...';
         if (btn) {
           btn.disabled = true;
           btn.textContent = '...';
-          btn.style.background = '#ccc';
+          btn.style.background = '#999';
           btn.style.cursor = 'default';
         }
         return;
