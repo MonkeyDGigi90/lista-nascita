@@ -484,6 +484,12 @@
       });
     }
 
+    // Inizializzazione sequenziale: prodotti, stock, carrello
+    document.addEventListener('DOMContentLoaded', function() {
+      initProducts();
+      syncStockFromBackend().then(renderCart);
+    });
+
     function toggleDesc(btn) {
       const container = btn.parentElement;
       if (!container) return;
