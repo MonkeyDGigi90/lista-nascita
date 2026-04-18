@@ -689,10 +689,10 @@
       if (typeof p.stock !== 'number') {
         stockSpan.textContent = '...';
         if (btn) {
-          btn.disabled = true;
-          btn.textContent = '...';
-          btn.style.background = '#999';
-          btn.style.cursor = 'default';
+          btn.disabled = false;
+          btn.textContent = 'Aggiungi al carrello';
+          btn.style.background = '';
+          btn.style.cursor = '';
         }
         return;
       }
