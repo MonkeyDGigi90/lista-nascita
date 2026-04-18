@@ -176,7 +176,7 @@
       <!-- Tutti i prodotti sono figli diretti di .products-grid -->
       <!-- INIZIO: prodotti aggiunti automaticamente -->
       <div class="product" data-product="Chicco Baby Moments Acqua Colonia" data-price="13.50" data-stock="1">
-          <img class="product-img" src="Lorenzo/Chicco Baby Moments Acqua Colonia Prezzo 13.50€ .jpg" alt="Chicco Baby Moments Acqua Colonia">
+          <img class="product-img" src="Lorenzo/Chicco Baby Moments Acqua Colonia Prezzo 13.50€.jpg" alt="Chicco Baby Moments Acqua Colonia">
         <h3>Chicco Baby Moments Acqua Colonia</h3>
         <p class="desc">Acqua di colonia delicata per neonati, profumazione leggera.</p>
         <p class="price">Prezzo: €13.50</p>
@@ -207,13 +207,13 @@
         <p class="stock">Disponibili: 1</p>
         <button class="add-btn" onclick="addToCart('Chicco gommotto azzurro 02 mesi Prezzo 13.99€', 13.99)">Aggiungi al carrello</button>
       </div>
-      <div class="product" data-product="Chicco massaggiagengive refrigerante azzurro" data-price="9.99" data-stock="1">
+      <div class="product" data-product="Massaggia gengive Chicco refrigerante" data-price="9.99" data-stock="1">
           <img class="product-img" src="Lorenzo/Chicco massaggiagengive refrigerante azzurro Prezzo 9.99€.jpg" alt="Chicco massaggiagengive refrigerante azzurro">
         <h3>Chicco massaggiagengive refrigerante azzurro</h3>
         <p class="desc">Massaggiagengive refrigerante, sollievo durante la dentizione.</p>
         <p class="price">Prezzo: €9.99</p>
         <p class="stock">Disponibili: 1</p>
-        <button class="add-btn" onclick="addToCart('Chicco massaggiagengive refrigerante azzurro Prezzo 9.99€', 9.99)">Aggiungi al carrello</button>
+        <button class="add-btn" onclick="addToCart('Massaggia gengive Chicco refrigerante', 9.99)">Aggiungi al carrello</button>
       </div>
       <div class="product" data-product="Chicco massaggiagengive refrigerante scimmia" data-price="9.99" data-stock="1">
           <img class="product-img" src="Lorenzo/Chicco massaggiagengive refrigerante scimmia Prezzo 9.99€.jpg" alt="Chicco massaggiagengive refrigerante scimmia">
@@ -345,13 +345,13 @@
         <button class="add-btn" onclick="addToCart('Chicco EasyFit Marsupio Ergonomico', 59)">Aggiungi al carrello</button>
       </div>
       <!-- Tutti gli altri prodotti seguono qui, senza chiusura anticipata del div -->
-        <div class="product" data-product="Chicco gioco giostra CONIGL-ORSO" data-price="34.90" data-stock="1">
+        <div class="product" data-product="Giostrina Next to Dreams Chicco" data-price="34.90" data-stock="1">
           <img class="product-img" src="Lorenzo/Chicco gioco giostra CONIGL-ORSO prezzo 34.90.jpg" alt="Chicco gioco giostra CONIGL-ORSO">
           <h3>Chicco gioco giostra CONIGL-ORSO</h3>
           <p class="desc">Giostrina musicale con coniglio e orso, rilassa e intrattiene il bimbo.</p>
           <p class="price">Prezzo: €34.90</p>
-          <p class="stock">Disponibili: 1</p>
-          <button class="add-btn" onclick="addToCart('Chicco gioco giostra CONIGL-ORSO', 34.90)">Aggiungi al carrello</button>
+          <p class="stock" style="color:#888">Regalato</p>
+          <button class="add-btn" disabled style="background:#aaa;">Regalato</button>
         </div>
         <div class="product" data-product="Chicco Indicatore Temperatura bagno" data-price="9.99" data-stock="1">
           <img class="product-img" src="Lorenzo/Chicco Indicatore Temperatura bagno prezzo 9.99.jpg" alt="Chicco Indicatore Temperatura bagno">
@@ -852,7 +852,7 @@
             const orderId = details.id;
             const purchasedItems = details.purchase_units && details.purchase_units[0] && details.purchase_units[0].items || [];
             console.log('Purchased items:', purchasedItems);
-            const { setDoc, doc, updateDoc } = window.firebaseModules;
+            const { setDoc, doc, updateDoc, getDoc } = window.firebaseModules;
             try {
               await setDoc(doc(window.db, "orders", orderId), {
                 buyer_name: buyer,
@@ -874,19 +874,32 @@
               const quantity = parseInt(item.quantity) || 1;
               console.log('Updating product:', productName, 'quantity:', quantity);
               try {
-                await updateDoc(doc(window.db, "products", productName), {
-                  stock: 0
+                // Recupera lo stock attuale
+                const productRef = doc(window.db, "products", productName);
+                const productSnap = await window.firebaseModules.getDocs(window.firebaseModules.collection(window.db, "products"));
+                let currentStock = 1;
+                productSnap.forEach(docSnap => {
+                  const d = docSnap.data();
+                  if (d.product_name === productName) {
+                    currentStock = d.stock || 1;
+                  }
                 });
-                console.log(`Stock aggiornato su Firestore per: ${productName}`);
+                let newStock = currentStock - quantity;
+                if (newStock < 0) newStock = 0;
+                await updateDoc(productRef, {
+                  stock: newStock
+                });
+                console.log(`Stock aggiornato su Firestore per: ${productName} (${currentStock} -> ${newStock})`);
               } catch (error) {
                 console.error(`Errore aggiornamento stock per ${productName}:`, error);
               }
             }
             purchasedItems.forEach(item => {
               const productName = item.name;
+              const quantity = parseInt(item.quantity) || 1;
               const p = products[productName];
               if (p) {
-                p.stock = 0;
+                p.stock = Math.max(0, (p.stock || 1) - quantity);
                 updateStockDisplay(productName);
               }
             });

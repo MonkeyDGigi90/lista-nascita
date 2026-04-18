@@ -41,6 +41,7 @@ async function syncStockFromOrders() {
   // Aggiorna lo stock dei prodotti
   const productsSnap = await db.collection('products').get();
   const updates = [];
+  const updatePromises = [];
   productsSnap.forEach(doc => {
     const product = doc.data();
     const name = product.product_name;
@@ -50,9 +51,12 @@ async function syncStockFromOrders() {
     if (purchased > 0) {
       newStock = Math.max(product.stock - purchased, 0);
       updates.push({ name, oldStock: product.stock, purchased, newStock });
-      db.collection('products').doc(name).set({ stock: newStock }, { merge: true });
+      updatePromises.push(db.collection('products').doc(name).set({ stock: newStock }, { merge: true }));
     }
   });
+
+  // Attendi che tutti gli aggiornamenti siano completati
+  await Promise.all(updatePromises);
 
   // Log di debug
   console.log('Aggiornamento stock da acquisti utenti:');
